@@ -603,6 +603,44 @@ if(window.innerWidth <= 768){
 </script>
 <!-- 🔥 FIREBASE END -->
 
+  
+<script type="module">
+  import {
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword
+  } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+
+  window.openAuth = () => {
+    document.getElementById("authModal").style.display = "flex";
+  };
+
+  window.closeAuth = () => {
+    document.getElementById("authModal").style.display = "none";
+  };
+
+  window.loginUser = () => {
+    signInWithEmailAndPassword(
+      auth,
+      authEmail.value,
+      authPass.value
+    ).then(()=>{
+      alert("✅ Login Successful");
+      closeAuth();
+    }).catch(err=>alert(err.message));
+  };
+
+  window.signupUser = () => {
+    createUserWithEmailAndPassword(
+      auth,
+      authEmail.value,
+      authPass.value
+    ).then(()=>{
+      alert("✅ Account Created");
+      closeAuth();
+    }).catch(err=>alert(err.message));
+  };
+</script>
+
 
   </body>
 </html>
