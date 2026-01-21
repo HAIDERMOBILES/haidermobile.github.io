@@ -415,8 +415,8 @@ footer{
     </div>
   </div>
 </div>
-
-
+<!-- 🔐 LOGIN BUTTON -->
+<a onclick="openAuth()">Login</a>
   </nav>
 </header>
 
@@ -577,6 +577,32 @@ if(window.innerWidth <= 768){
   });
 }
 </script>
+  <!-- 🔥 FIREBASE START -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+  import { getAuth } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+  import { getFirestore } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBpRSDmP1cXh4EbmXrikmaMElgjUxoDWTc",
+    authDomain: "haider-mobiles.firebaseapp.com",
+    projectId: "haider-mobiles",
+    storageBucket: "haider-mobiles.firebasestorage.app",
+    messagingSenderId: "578639079490",
+    appId: "1:578639079490:web:a4183ed0242437573125db"
+  };
+
+  // Init Firebase
+  const app = initializeApp(firebaseConfig);
+
+  // Services
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  console.log("✅ Firebase Connected Successfully");
+</script>
+<!-- 🔥 FIREBASE END -->
+
 
   </body>
 </html>
