@@ -2,234 +2,197 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Product Detail</title>
+<title>Product Detail | Haider Mobiles</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
 
 <style>
-body{
-  background:#000;
-  color:#fff;
-  font-family:Arial,sans-serif;
-  margin:0;
-}
-.container{
-  max-width:1200px;
-  margin:auto;
-  padding:40px 20px;
+:root {
+  --gold: linear-gradient(135deg, #d4af37 0%, #f9f295 50%, #d4af37 100%);
+  --gold-text: #d4af37;
+  --bg: #050505;
+  --glass: rgba(255, 255, 255, 0.05);
+  --border: rgba(212, 175, 55, 0.2);
 }
 
-/* TOP */
-.top{
-  display:grid;
-  grid-template-columns:1.1fr 1fr;
-  gap:40px;
+* { box-sizing: border-box; transition: 0.3s; font-family: 'Poppins', sans-serif; }
+body { background: var(--bg); color: #fff; margin: 0; overflow-x: hidden; }
+
+/* HEADER */
+header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 15px 5%; background: rgba(0,0,0,0.9); backdrop-filter: blur(15px);
+  border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000;
 }
+.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: #fff; }
+.logo img { height: 35px; border-radius: 50%; border: 1px solid var(--gold-text); }
+.logo span { font-weight: 800; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+.nav-links { display: flex; gap: 10px; }
+.btn-nav {
+  padding: 7px 15px; border-radius: 20px; border: 1px solid var(--border);
+  color: #fff; text-decoration: none; font-size: 12px; font-weight: 600;
+  background: transparent; cursor: pointer;
+}
+.btn-nav:hover { background: var(--gold); color: #000; }
+
+.container { max-width: 1200px; margin: auto; padding: 30px 20px; }
+.top { display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; }
 
 /* SLIDER */
-.slider{
-  position:relative;
+.slider { position: relative; background: var(--glass); border: 1px solid var(--border); border-radius: 25px; padding: 20px; text-align: center; }
+.slider img { width: 100%; max-height: 400px; object-fit: contain; border-radius: 16px; }
+.arrow {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  background: rgba(0,0,0,0.6); border: 1px solid #333; color: #fff;
+  font-size: 22px; padding: 10px 14px; cursor: pointer; border-radius: 50%;
 }
-.slider img{
-  width:100%;
-  border-radius:16px;
-  border:1px solid #222;
-}
-.arrow{
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-  background:rgba(0,0,0,0.6);
-  border:1px solid #333;
-  color:#fff;
-  font-size:22px;
-  padding:10px 14px;
-  cursor:pointer;
-  border-radius:50%;
-}
-.arrow.left{left:10px}
-.arrow.right{right:10px}
-
-/* PRICE */
-.price-box del{color:#777}
-.price-box strong{font-size:28px;display:block}
-
-/* BUTTON */
-.btn{
-  background:#25D366;
-  color:#000;
-  padding:15px;
-  border-radius:12px;
-  display:block;
-  font-weight:bold;
-  text-align:center;
-  text-decoration:none;
-  margin-top:18px;
-}
-.back{
-  display:inline-block;
-  margin-top:12px;
-  color:#25D366;
-  cursor:pointer;
-}
+.arrow.left { left: 20px; }
+.arrow.right { right: 20px; }
 
 /* INFO */
-.stats{font-size:14px;color:#bbb;margin:6px 0}
-.trust{display:flex;gap:12px;flex-wrap:wrap;color:#ccc;margin:14px 0}
+h1 { font-size: 2.2rem; margin: 10px 0; font-weight: 800; }
+.price-box strong { font-size: 2.8rem; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: block; }
+.price-box del { color: #555; font-size: 1.2rem; }
+
+.btn-buy {
+  background: #25D366; color: #fff; padding: 18px; border-radius: 15px;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  font-weight: 800; text-decoration: none; font-size: 18px; margin-top: 20px;
+}
 
 /* SECTIONS */
-.section{margin-top:50px}
-.spec-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
-  gap:14px;
-}
-.spec{
-  background:#0f0f0f;
-  border:1px solid #222;
-  padding:14px;
-  border-radius:12px;
-}
+.section { margin-top: 50px; }
+.spec-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+.spec { background: #0f0f0f; border: 1px solid #222; padding: 14px; border-radius: 12px; font-size: 13px; color: #ccc; }
 
-.related-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
-  gap:18px;
-}
-.related-item{
-  background:#0f0f0f;
-  border:1px solid #222;
-  border-radius:14px;
-  padding:12px;
-  cursor:pointer;
-}
-.related-item img{width:100%;border-radius:10px}
+.related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+.related-item { background: #0f0f0f; border: 1px solid #222; border-radius: 15px; padding: 15px; cursor: pointer; text-align: center; height: 100%; }
+.related-item img { width: 100%; height: 150px; object-fit: contain; border-radius: 10px; margin-bottom: 10px; }
+.related-item h4 { font-size: 14px; margin: 5px 0; height: 40px; overflow: hidden; }
 
-@media(max-width:768px){
-  .top{grid-template-columns:1fr}
-}
+@media(max-width:768px){ .top{grid-template-columns:1fr} }
 </style>
 </head>
 
 <body>
 
+<header>
+  <a href="index.html" class="logo">
+    <img src="logo.jpg" alt="Logo">
+    <span>HAIDER MOBILES</span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html" class="btn-nav">HOME</a>
+    <button class="btn-nav">LOGIN</button>
+    <button class="btn-nav">SIGN UP</button>
+  </div>
+</header>
+
 <div class="container">
-
-<div class="top">
-
-  <!-- IMAGE SLIDER -->
-  <div class="slider">
-    <img id="mainImg">
-    <div class="arrow left" onclick="prevImg()">‹</div>
-    <div class="arrow right" onclick="nextImg()">›</div>
-  </div>
-
-  <!-- INFO -->
-  <div>
-    <h1 id="name"></h1>
-
-    <div class="price-box">
-      <del id="oldPrice"></del>
-      <strong id="price"></strong>
+  <div class="top">
+    <div class="slider">
+      <img id="mainImg">
+      <div class="arrow left" onclick="prevImg()">‹</div>
+      <div class="arrow right" onclick="nextImg()">›</div>
     </div>
 
-    <p id="desc"></p>
+    <div>
+      <h1 id="name"></h1>
+      <div class="price-box">
+        <del id="oldPrice"></del>
+        <strong id="price"></strong>
+      </div>
+      <p id="desc"></p>
+      
+      <div style="display:flex; gap:15px; margin:15px 0; font-size:12px; color:#777;">
+        <span>👀 <span id="viewing"></span> Viewing</span>
+        <span>🔥 <span id="sold"></span> Sold Recently</span>
+      </div>
 
-    <div class="stats">👀 <span id="viewing"></span> customers viewing</div>
-    <div class="stats">🔥 <span id="sold"></span> sold recently</div>
-
-    <div class="trust">
-      <span>✔ Original</span>
-      <span>🔒 Secure Payment</span>
-      <span>🚚 Fast Shipping</span>
+      <a id="buy" class="btn-buy" target="_blank">Order on WhatsApp</a>
     </div>
-
-    <a id="buy" class="btn" target="_blank">Buy on WhatsApp</a>
-    <a class="back" onclick="history.back()">← Back</a>
   </div>
 
-</div>
+  <div class="section">
+    <h2 style="color:var(--gold-text)">Specifications</h2>
+    <div class="spec-grid" id="specs"></div>
+  </div>
 
-<!-- SPECIFICATIONS -->
-<div class="section">
-  <h2>Specifications</h2>
-  <div class="spec-grid" id="specs"></div>
-</div>
-
-<!-- RELATED -->
-<div class="section">
-  <h2>Other Products</h2>
-  <div class="related-grid" id="related"></div>
-</div>
-
+  <div class="section">
+    <h2 style="color:var(--gold-text)">Other Products You May Like</h2>
+    <div class="related-grid" id="related"></div>
+  </div>
 </div>
 
 <script>
 const products = {
-  "royalx-rpd40":{
-    name:"RoyalX Charger RPD-40",
-    oldPrice:"Rs 3200",
-    price:"Rs 2500",
-    desc:"Fast charger with 45W output and advanced safety protection.",
-    images:["31.jpeg","21-RPD-30_Type-C_to_Lightning_45W_PD_Fast_Charging_Cable.jpg"],
-    specs:[
-      "Type-C to Type-C",
-      "Total Output: 45W",
-      "PD Output: 25W",
-      "USB-A Output: 20W",
-      "Fast & Safe Charging"
-    ],
-    related:["royalx-rh5"]
+  "royalx-rpd40": {
+    name: "RoyalX Charger RPD-40",
+    oldPrice: "Rs 3200", price: "Rs 2500",
+    desc: "Fast charger with 45W output and advanced safety protection.",
+    images: ["31.jpeg", "21-RPD-30_Type-C_to_Lightning.jpg"],
+    specs: ["Type-C to Type-C", "Total Output: 45W", "PD Output: 25W", "Fast Charging"],
+    related: ["royalx-rh5", "royalx-rh9", "royalx-rh15"] // Zyada products add kiye
   },
-
-  "royalx-rh5":{
-    name:"RoyalX Handfree RH-5",
-    price:"Rs 350",
-    images:["33.jpeg"]
+  "royalx-rh5": {
+    name: "RoyalX Handfree RH-5",
+    price: "Rs 350", images: ["33.jpeg"],
+    specs: ["Deep Bass", "3.5mm Jack"],
+    related: ["royalx-rpd40", "royalx-rh9"]
+  },
+  "royalx-rh9": {
+    name: "RoyalX Handfree RH-9",
+    price: "Rs 750", images: ["26.jpeg"],
+    specs: ["Clear Sound", "Durable Cable"],
+    related: ["royalx-rh15", "royalx-rpd40"]
+  },
+  "royalx-rh15": {
+    name: "RoyalX Handfree RH-15",
+    price: "Rs 600", images: ["25.jpeg"],
+    specs: ["Premium Build", "High Fidelity"],
+    related: ["royalx-rh5", "royalx-rpd40"]
   }
 };
 
-const id = new URLSearchParams(location.search).get("id");
+const id = new URLSearchParams(location.search).get("id") || "royalx-rpd40";
 const p = products[id];
-
 let current = 0;
 
-if(!p){
-  document.querySelector(".container").innerHTML="<h2>Product not found</h2>";
-}else{
-  name.textContent = p.name;
-  price.textContent = p.price;
-  oldPrice.textContent = p.oldPrice || "";
-  desc.textContent = p.desc;
-  mainImg.src = p.images[0];
+if(p) {
+  document.getElementById('name').textContent = p.name;
+  document.getElementById('price').textContent = p.price;
+  document.getElementById('oldPrice').textContent = p.oldPrice || "";
+  document.getElementById('desc').textContent = p.desc;
+  document.getElementById('mainImg').src = p.images[0];
+  document.getElementById('specs').innerHTML = p.specs.map(s => `<div class="spec">${s}</div>`).join("");
+  document.getElementById('viewing').textContent = Math.floor(Math.random()*15)+5;
+  document.getElementById('sold').textContent = Math.floor(Math.random()*30)+10;
+  document.getElementById('buy').href = "https://wa.me/923279518790?text=" + encodeURIComponent("I want: " + p.name);
 
-  specs.innerHTML = p.specs.map(s=>`<div class="spec">${s}</div>`).join("");
+  // RELATED LOGIC: Agar related list choti hai to baki products khud add ho jayenge
+  let relatedIDs = p.related || [];
+  
+  // Auto-fill related products from database
+  Object.keys(products).forEach(key => {
+    if(key !== id && !relatedIDs.includes(key) && relatedIDs.length < 4) {
+      relatedIDs.push(key);
+    }
+  });
 
-  viewing.textContent = Math.floor(Math.random()*15)+5;
-  sold.textContent = Math.floor(Math.random()*30)+10;
-
-  buy.href="https://wa.me/923279518790?text="+
-    encodeURIComponent("I want "+p.name);
-
-  related.innerHTML = (p.related||[]).map(r=>{
-    const rp=products[r];
-    return `
-      <div class="related-item"
-       onclick="location.href='product.html?id=${r}'">
-        <img src="${rp.images[0]}">
-        <h4>${rp.name}</h4>
-        <div>${rp.price}</div>
-      </div>`;
+  document.getElementById('related').innerHTML = relatedIDs.map(r => {
+    const rp = products[r];
+    if(!rp) return '';
+    return `<div class="related-item" onclick="location.href='product.html?id=${r}'">
+      <img src="${rp.images[0]}">
+      <h4>${rp.name}</h4>
+      <div style="color:var(--gold-text); font-weight:bold;">${rp.price}</div>
+    </div>`;
   }).join("");
 }
 
-function nextImg(){
-  current = (current + 1) % p.images.length;
-  mainImg.src = p.images[current];
-}
-function prevImg(){
-  current = (current - 1 + p.images.length) % p.images.length;
-  mainImg.src = p.images[current];
-}
+function nextImg() { current = (current + 1) % p.images.length; document.getElementById('mainImg').src = p.images[current]; }
+function prevImg() { current = (current - 1 + p.images.length) % p.images.length; document.getElementById('mainImg').src = p.images[current]; }
 </script>
 
 </body>
