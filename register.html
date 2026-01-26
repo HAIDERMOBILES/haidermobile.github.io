@@ -35,34 +35,32 @@
         import { getAuth, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
         const firebaseConfig = {
-            apiKey: "PASTE_HERE",
-            authDomain: "PASTE_HERE",
-            projectId: "PASTE_HERE",
-            storageBucket: "PASTE_HERE",
-            messagingSenderId: "PASTE_HERE",
-            appId: "PASTE_HERE"
+            apiKey: "AIzaSyCYzkMGDwWZGx_PlrNfjloYZ6PVQRne9wg",
+            authDomain: "web-app-4f3a1.firebaseapp.com",
+            projectId: "web-app-4f3a1",
+            storageBucket: "web-app-4f3a1.firebasestorage.app",
+            messagingSenderId: "222099203820",
+            appId: "1:222099203820:web:778e204d2960181dfba7c9"
         };
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
 
-        // Email Sign Up
         document.getElementById('regBtn').onclick = async () => {
             const email = document.getElementById('regEmail').value;
             const pass = document.getElementById('regPass').value;
             try {
                 await createUserWithEmailAndPassword(auth, email, pass);
                 alert("Account Created!"); window.location.href="index.html";
-            } catch (e) { alert(e.message); }
+            } catch (e) { alert("Error: " + e.message); }
         };
 
-        // Google Sign Up
         document.getElementById('googleBtn').onclick = async () => {
             try {
                 await signInWithPopup(auth, provider);
                 window.location.href="index.html";
-            } catch (e) { alert(e.message); }
+            } catch (e) { alert("Google Error: " + e.message); }
         };
     </script>
 </body>
