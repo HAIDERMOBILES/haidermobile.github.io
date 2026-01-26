@@ -1,198 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Product Detail | Haider Mobiles</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details | Haider Mobiles</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --gold: #d4af37; --bg: #050505; --card-bg: rgba(255,255,255,0.03); }
+        body { margin: 0; background: var(--bg); color: #fff; font-family: 'Poppins', sans-serif; padding: 20px; line-height: 1.6; }
+        
+        /* Main Layout */
+        .container { max-width: 800px; margin: 0 auto; }
+        
+        .product-main { background: var(--card-bg); border: 1px solid rgba(212,175,55,0.2); border-radius: 30px; padding: 30px; text-align: center; backdrop-filter: blur(15px); margin-bottom: 30px; }
+        .product-img { width: 100%; max-width: 400px; border-radius: 20px; border: 1px solid #222; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        
+        h1 { font-size: 2rem; color: #fff; margin: 10px 0; font-weight: 800; }
+        .brand-badge { background: var(--gold); color: #000; padding: 5px 15px; border-radius: 50px; font-weight: 800; font-size: 12px; text-transform: uppercase; }
+        .price-tag { font-size: 2.5rem; color: var(--gold); font-weight: 800; margin: 20px 0; display: block; }
+        
+        /* Specifications */
+        .spec-box { background: rgba(255,255,255,0.02); border-radius: 20px; padding: 20px; margin: 25px 0; text-align: left; border-left: 4px solid var(--gold); }
+        .spec-box h3 { margin-top: 0; color: var(--gold); font-size: 16px; text-transform: uppercase; }
+        .spec-item { display: flex; justify-content: space-between; border-bottom: 1px solid #222; padding: 8px 0; font-size: 14px; }
+        
+        .order-btn { background: #25D366; color: #000; text-decoration: none; padding: 20px; border-radius: 15px; display: block; font-weight: 800; font-size: 1.2rem; transition: 0.3s; box-shadow: 0 10px 20px rgba(37,211,102,0.2); }
+        .order-btn:hover { transform: translateY(-3px); background: #20ba5a; }
 
-<style>
-:root {
-  --gold: linear-gradient(135deg, #d4af37 0%, #f9f295 50%, #d4af37 100%);
-  --gold-text: #d4af37;
-  --bg: #050505;
-  --glass: rgba(255, 255, 255, 0.05);
-  --border: rgba(212, 175, 55, 0.2);
-}
+        /* Related Section */
+        .related-section { margin-top: 50px; padding-top: 30px; border-top: 1px solid #222; }
+        .related-title { color: var(--gold); font-weight: 800; margin-bottom: 20px; font-size: 1.2rem; }
+        .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; }
+        .related-card { background: #111; padding: 12px; border-radius: 15px; text-align: center; text-decoration: none; border: 1px solid #222; transition: 0.3s; }
+        .related-card:hover { border-color: var(--gold); }
+        .related-card img { width: 100%; height: 100px; object-fit: contain; margin-bottom: 10px; }
+        .related-card h4 { font-size: 12px; color: #fff; margin: 5px 0; height: 32px; overflow: hidden; }
+        .related-card span { color: var(--gold); font-size: 13px; font-weight: bold; }
 
-* { box-sizing: border-box; transition: 0.3s; font-family: 'Poppins', sans-serif; }
-body { background: var(--bg); color: #fff; margin: 0; overflow-x: hidden; }
-
-/* HEADER */
-header {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 15px 5%; background: rgba(0,0,0,0.9); backdrop-filter: blur(15px);
-  border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000;
-}
-.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: #fff; }
-.logo img { height: 35px; border-radius: 50%; border: 1px solid var(--gold-text); }
-.logo span { font-weight: 800; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
-.nav-links { display: flex; gap: 10px; }
-.btn-nav {
-  padding: 7px 15px; border-radius: 20px; border: 1px solid var(--border);
-  color: #fff; text-decoration: none; font-size: 12px; font-weight: 600;
-  background: transparent; cursor: pointer;
-}
-.btn-nav:hover { background: var(--gold); color: #000; }
-
-.container { max-width: 1200px; margin: auto; padding: 30px 20px; }
-.top { display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; }
-
-/* SLIDER */
-.slider { position: relative; background: var(--glass); border: 1px solid var(--border); border-radius: 25px; padding: 20px; text-align: center; }
-.slider img { width: 100%; max-height: 400px; object-fit: contain; border-radius: 16px; }
-.arrow {
-  position: absolute; top: 50%; transform: translateY(-50%);
-  background: rgba(0,0,0,0.6); border: 1px solid #333; color: #fff;
-  font-size: 22px; padding: 10px 14px; cursor: pointer; border-radius: 50%;
-}
-.arrow.left { left: 20px; }
-.arrow.right { right: 20px; }
-
-/* INFO */
-h1 { font-size: 2.2rem; margin: 10px 0; font-weight: 800; }
-.price-box strong { font-size: 2.8rem; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: block; }
-.price-box del { color: #555; font-size: 1.2rem; }
-
-.btn-buy {
-  background: #25D366; color: #fff; padding: 18px; border-radius: 15px;
-  display: flex; align-items: center; justify-content: center; gap: 10px;
-  font-weight: 800; text-decoration: none; font-size: 18px; margin-top: 20px;
-}
-
-/* SECTIONS */
-.section { margin-top: 50px; }
-.spec-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
-.spec { background: #0f0f0f; border: 1px solid #222; padding: 14px; border-radius: 12px; font-size: 13px; color: #ccc; }
-
-.related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
-.related-item { background: #0f0f0f; border: 1px solid #222; border-radius: 15px; padding: 15px; cursor: pointer; text-align: center; height: 100%; }
-.related-item img { width: 100%; height: 150px; object-fit: contain; border-radius: 10px; margin-bottom: 10px; }
-.related-item h4 { font-size: 14px; margin: 5px 0; height: 40px; overflow: hidden; }
-
-@media(max-width:768px){ .top{grid-template-columns:1fr} }
-</style>
+        .back-home { display: inline-block; margin-bottom: 20px; color: var(--gold); text-decoration: none; font-size: 14px; }
+    </style>
 </head>
-
 <body>
 
-<header>
-  <a href="index.html" class="logo">
-    <img src="logo.jpg" alt="Logo">
-    <span>HAIDER MOBILES</span>
-  </a>
-  <div class="nav-links">
-    <a href="index.html" class="btn-nav">HOME</a>
-    <button class="btn-nav">LOGIN</button>
-    <button class="btn-nav">SIGN UP</button>
-  </div>
-</header>
-
 <div class="container">
-  <div class="top">
-    <div class="slider">
-      <img id="mainImg">
-      <div class="arrow left" onclick="prevImg()">‹</div>
-      <div class="arrow right" onclick="nextImg()">›</div>
+    <a href="index.html" class="back-home">← Back to Store</a>
+
+    <div id="main-content">
+        <div style="text-align: center; padding: 50px;">⏳ Loading Details...</div>
     </div>
 
-    <div>
-      <h1 id="name"></h1>
-      <div class="price-box">
-        <del id="oldPrice"></del>
-        <strong id="price"></strong>
-      </div>
-      <p id="desc"></p>
-      
-      <div style="display:flex; gap:15px; margin:15px 0; font-size:12px; color:#777;">
-        <span>👀 <span id="viewing"></span> Viewing</span>
-        <span>🔥 <span id="sold"></span> Sold Recently</span>
-      </div>
-
-      <a id="buy" class="btn-buy" target="_blank">Order on WhatsApp</a>
+    <div class="related-section">
+        <h3 class="related-title">You May Also Like</h3>
+        <div class="related-grid" id="related-items">
+            </div>
     </div>
-  </div>
-
-  <div class="section">
-    <h2 style="color:var(--gold-text)">Specifications</h2>
-    <div class="spec-grid" id="specs"></div>
-  </div>
-
-  <div class="section">
-    <h2 style="color:var(--gold-text)">Other Products You May Like</h2>
-    <div class="related-grid" id="related"></div>
-  </div>
 </div>
 
 <script>
-const products = {
-  "royalx-rpd40": {
-    name: "RoyalX Charger RPD-40",
-    oldPrice: "Rs 3200", price: "Rs 2500",
-    desc: "Fast charger with 45W output and advanced safety protection.",
-    images: ["31.jpeg", "21-RPD-30_Type-C_to_Lightning.jpg"],
-    specs: ["Type-C to Type-C", "Total Output: 45W", "PD Output: 25W", "Fast Charging"],
-    related: ["royalx-rh5", "royalx-rh9", "royalx-rh15"] // Zyada products add kiye
-  },
-  "royalx-rh5": {
-    name: "RoyalX Handfree RH-5",
-    price: "Rs 350", images: ["33.jpeg"],
-    specs: ["Deep Bass", "3.5mm Jack"],
-    related: ["royalx-rpd40", "royalx-rh9"]
-  },
-  "royalx-rh9": {
-    name: "RoyalX Handfree RH-9",
-    price: "Rs 750", images: ["26.jpeg"],
-    specs: ["Clear Sound", "Durable Cable"],
-    related: ["royalx-rh15", "royalx-rpd40"]
-  },
-  "royalx-rh15": {
-    name: "RoyalX Handfree RH-15",
-    price: "Rs 600", images: ["25.jpeg"],
-    specs: ["Premium Build", "High Fidelity"],
-    related: ["royalx-rh5", "royalx-rpd40"]
-  }
-};
+async function loadProductPage() {
+    const mainContent = document.getElementById('main-content');
+    const relatedGrid = document.getElementById('related-items');
+    
+    // URL se ID lena
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('id');
 
-const id = new URLSearchParams(location.search).get("id") || "royalx-rpd40";
-const p = products[id];
-let current = 0;
+    try {
+        const response = await fetch('data.json');
+        const products = await response.json();
+        
+        // Product dhundna
+        const p = products.find(item => item.id === productId);
 
-if(p) {
-  document.getElementById('name').textContent = p.name;
-  document.getElementById('price').textContent = p.price;
-  document.getElementById('oldPrice').textContent = p.oldPrice || "";
-  document.getElementById('desc').textContent = p.desc;
-  document.getElementById('mainImg').src = p.images[0];
-  document.getElementById('specs').innerHTML = p.specs.map(s => `<div class="spec">${s}</div>`).join("");
-  document.getElementById('viewing').textContent = Math.floor(Math.random()*15)+5;
-  document.getElementById('sold').textContent = Math.floor(Math.random()*30)+10;
-  document.getElementById('buy').href = "https://wa.me/923279518790?text=" + encodeURIComponent("I want: " + p.name);
+        if (p) {
+            // Document title change karna
+            document.title = `${p.name} | Haider Mobiles`;
 
-  // RELATED LOGIC: Agar related list choti hai to baki products khud add ho jayenge
-  let relatedIDs = p.related || [];
-  
-  // Auto-fill related products from database
-  Object.keys(products).forEach(key => {
-    if(key !== id && !relatedIDs.includes(key) && relatedIDs.length < 4) {
-      relatedIDs.push(key);
+            // Main Details Render
+            mainContent.innerHTML = `
+                <div class="product-main">
+                    <span class="brand-badge">${p.brand}</span>
+                    <br><br>
+                    <img src="${p.img}" class="product-img" alt="${p.name}">
+                    <h1>${p.name}</h1>
+                    <span class="price-tag">${p.price}</span>
+                    
+                    <div class="spec-box">
+                        <h3>Specifications</h3>
+                        <div class="spec-item"><span>Brand</span> <span>${p.brand}</span></div>
+                        <div class="spec-item"><span>Availability</span> <span style="color:#25D366">In Stock</span></div>
+                        <div class="spec-item"><span>Condition</span> <span>New / Box Packed</span></div>
+                        <div class="spec-item"><span>Delivery</span> <span>Fast Shipping</span></div>
+                    </div>
+
+                    <a href="https://wa.me/923279518790?text=I want to order: ${p.name}" class="order-btn">
+                        ORDER ON WHATSAPP
+                    </a>
+                </div>
+            `;
+
+            // Related Products (Same Brand)
+            const related = products.filter(item => item.brand === p.brand && item.id !== p.id);
+            if(related.length > 0) {
+                relatedGrid.innerHTML = related.slice(0, 4).map(item => `
+                    <a href="product.html?id=${item.id}" class="related-card">
+                        <img src="${item.img}">
+                        <h4>${item.name}</h4>
+                        <span>${item.price}</span>
+                    </a>
+                `).join('');
+            } else {
+                relatedGrid.innerHTML = "<p style='color:#555'>No related items yet.</p>";
+            }
+
+        } else {
+            mainContent.innerHTML = "<h2>Product Not Found</h2><a href='index.html'>Go Home</a>";
+        }
+    } catch (err) {
+        mainContent.innerHTML = "<h2>Error Loading Data</h2>";
     }
-  });
-
-  document.getElementById('related').innerHTML = relatedIDs.map(r => {
-    const rp = products[r];
-    if(!rp) return '';
-    return `<div class="related-item" onclick="location.href='product.html?id=${r}'">
-      <img src="${rp.images[0]}">
-      <h4>${rp.name}</h4>
-      <div style="color:var(--gold-text); font-weight:bold;">${rp.price}</div>
-    </div>`;
-  }).join("");
 }
 
-function nextImg() { current = (current + 1) % p.images.length; document.getElementById('mainImg').src = p.images[current]; }
-function prevImg() { current = (current - 1 + p.images.length) % p.images.length; document.getElementById('mainImg').src = p.images[current]; }
+window.onload = loadProductPage;
 </script>
 
 </body>
