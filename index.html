@@ -28,7 +28,7 @@ body { margin: 0; background: var(--bg); color: #fff; font-family: 'Poppins', sa
 .brand-chip { padding: 6px 18px; background: rgba(212, 175, 55, 0.05); border: 1px solid var(--border); border-radius: 20px; font-size: 12px; white-space: nowrap; cursor: pointer; color: #888; }
 .brand-chip:hover { color: var(--gold); border-color: var(--gold); }
 
-/* --- RESPONSIVE LAYOUT LOGIC --- */
+/* --- RESPONSIVE LAYOUT --- */
 .brand-section { padding: 30px 6%; }
 .brand-title { font-size: 22px; font-weight: 800; margin-bottom: 20px; border-left: 5px solid var(--gold); padding-left: 15px; }
 
@@ -39,8 +39,46 @@ body { margin: 0; background: var(--bg); color: #fff; font-family: 'Poppins', sa
     gap: 25px; 
 }
 
-/* Mobile: Swipe View */
+/* --- CARD STYLE WITH ANIMATIONS --- */
+.card { 
+    background: var(--card-bg); 
+    border-radius: 20px; 
+    padding: 18px; 
+    border: 1px solid #222; 
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    border-color: var(--gold);
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.card img { 
+    width: 100%; height: 200px; object-fit: contain; 
+    background: #fff; border-radius: 15px; padding: 10px; 
+    margin-bottom: 15px; transition: transform 0.5s ease;
+}
+
+.card:hover img { transform: scale(1.08); }
+
+.card h3 { font-size: 14px; height: 40px; overflow: hidden; margin: 10px 0; color: #ddd; }
+.price { color: #fff; font-weight: 800; font-size: 18px; display: block; margin-bottom: 15px; }
+.btn-view { display: block; background: var(--gold); color: #000; text-decoration: none; font-size: 12px; font-weight: 800; padding: 10px; border-radius: 10px; }
+.btn-view:hover { background: #fff; box-shadow: 0 0 15px var(--gold); }
+
+/* --- MOBILE OPTIMIZATION --- */
 @media (max-width: 768px) {
+    .header-main { gap: 5px; }
+    .store-name { font-size: 0.9rem; }
+    .search-box { width: 35%; padding: 7px 10px; }
+    .btn-auth { padding: 6px 8px; font-size: 9px; }
+    
     .brand-section { padding: 20px 0 10px 15px; }
     .product-container { 
         display: flex; 
@@ -51,63 +89,6 @@ body { margin: 0; background: var(--bg); color: #fff; font-family: 'Poppins', sa
     }
     .product-container::-webkit-scrollbar { display: none; }
     .card { min-width: 200px; }
-    .search-box { width: 40%; }
-}
-
-/* --- CARD STYLE --- */
-.card { background: var(--card-bg); border-radius: 20px; padding: 18px; border: 1px solid #222; text-align: center; }
-.card img { width: 100%; height: 200px; object-fit: contain; background: #fff; border-radius: 15px; padding: 10px; margin-bottom: 15px; }
-.card h3 { font-size: 14px; height: 40px; overflow: hidden; margin: 10px 0; color: #ddd; }
-.price { color: #fff; font-weight: 800; font-size: 18px; display: block; margin-bottom: 15px; }
-.btn-view { display: block; background: var(--gold); color: #000; text-decoration: none; font-size: 12px; font-weight: 800; padding: 10px; border-radius: 10px; }
-
-    /* --- PURANA STYLE RAKHTE HUAY NAYI ANIMATIONS --- */
-.card { 
-    background: var(--card-bg); 
-    border-radius: 20px; 
-    padding: 18px; 
-    border: 1px solid #222; 
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Smooth Bounce Effect */
-}
-
-/* Jab Mouse Card par aaye */
-.card:hover {
-    transform: translateY(-10px); /* Card upar uthega */
-    border-color: var(--gold);
-    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2); /* Gold Glow */
-    background: rgba(255, 255, 255, 0.05);
-}
-
-/* Image Zoom Effect */
-.card img { 
-    width: 100%; 
-    height: 200px; 
-    object-fit: contain; 
-    background: #fff; 
-    border-radius: 15px; 
-    padding: 10px; 
-    margin-bottom: 15px; 
-    transition: transform 0.5s ease;
-}
-
-.card:hover img {
-    transform: scale(1.08); /* Image halki si bari hogi */
-}
-
-/* Button Pulse on Hover */
-.btn-view:hover {
-    background: #fff;
-    color: #000;
-    letter-spacing: 1px;
-    box-shadow: 0 0 15px var(--gold);
-}
-
-/* Mobile par animation halki rakhi hai taake lag na ho */
-@media (max-width: 768px) {
     .card:hover { transform: translateY(-5px); }
 }
 </style>
