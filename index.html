@@ -65,23 +65,10 @@ header {
 .card .price { font-size: 1.4rem; font-weight: 800; margin: 10px 0; display: block; color: #fff; }
 
 .action-buttons { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
+.btn-order { background: var(--gold); color: #000; padding: 12px; border-radius: 12px; text-decoration: none; font-weight: 800; font-size: 13px; display: block; }
+.btn-view { background: transparent; color: var(--gold-text); padding: 10px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 12px; border: 1px solid var(--border); display: block; }
 
-.btn-order {
-  background: var(--gold); color: #000; padding: 12px; border-radius: 12px;
-  text-decoration: none; font-weight: 800; font-size: 13px; letter-spacing: 0.5px;
-  display: block;
-}
-.btn-view {
-  background: transparent; color: var(--gold-text); padding: 10px; border-radius: 12px;
-  text-decoration: none; font-weight: 600; font-size: 12px; border: 1px solid var(--border);
-  display: block;
-}
-.btn-view:hover { background: rgba(212, 175, 55, 0.1); }
-
-#loginModal {
-  display:none; position:fixed; top:0; left:0; width:100%; height:100%;
-  background:rgba(0,0,0,0.9); z-index:2000; justify-content:center; align-items:center;
-}
+#loginModal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:2000; justify-content:center; align-items:center; }
 .modal-box { background:#111; padding:40px; border-radius:30px; border: 1px solid var(--gold-text); width:350px; text-align:center; }
 .modal-box input { width:100%; padding:14px; margin:10px 0; background:#1a1a1a; border:1px solid #333; color:#fff; border-radius:12px; outline: none; }
 
@@ -116,139 +103,85 @@ header {
 <div class="container">
   <div class="product-grid" id="mainGrid">
     
-    <div class="card" data-brand="RoyalX">
-      <img src="34.jpeg">
-      <span class="brand-tag">RoyalX Power</span>
-      <h3>Fast Charging Cable RC-310</h3>
-      <span class="price">Rs 1,299</span>
-      <div class="action-buttons">
-        <a class="btn-order" href="https://wa.me/923279518790?text=Assalam-o-Alaikum! I want to order RoyalX RC-310 Cable">ORDER ON WHATSAPP</a>
-        <a class="btn-view" href="rc310.html">VIEW DETAILS</a>
-      </div>
-    </div>
-
-    <div class="card" data-brand="RoyalX">
-      <img src="32.jpeg">
-      <span class="brand-tag">RoyalX Audio</span>
-      <h3>Type-C Handfree RH-6</h3>
-      <span class="price">Rs 900</span>
-      <div class="action-buttons">
-        <a class="btn-order" href="https://wa.me/923279518790?text=Assalam-o-Alaikum! I want to order RoyalX RH-6 Type-C Handfree">ORDER ON WHATSAPP</a>
-        <a class="btn-view" href="rh6.html">VIEW DETAILS</a>
-      </div>
-    </div>
-
-    <div class="card" data-brand="RoyalX">
-      <img src="30.jpeg">
-      <span class="brand-tag">RoyalX Audio</span>
-      <h3>Premium Handfree RH-15</h3>
-      <span class="price">Rs 450</span>
-      <div class="action-buttons">
-        <a class="btn-order" href="https://wa.me/923279518790?text=Assalam-o-Alaikum! I want to order RoyalX RH-15 Handfree">ORDER ON WHATSAPP</a>
-        <a class="btn-view" href="rh15.html">VIEW DETAILS</a>
-      </div>
-    </div>
-
-    <div class="card" data-brand="RoyalX">
-      <img src="33.jpeg">
-      <span class="brand-tag">RoyalX Audio</span>
-      <h3>Pure Sound Handfree RH-5</h3>
-      <span class="price">Rs 350</span>
-      <div class="action-buttons">
-        <a class="btn-order" href="https://wa.me/923279518790?text=Assalam-o-Alaikum! I want to order RoyalX RH-5 Handfree">ORDER ON WHATSAPP</a>
-        <a class="btn-view" href="rh5.html">VIEW DETAILS</a>
-      </div>
-    </div>
-
     <div class="card" data-brand="Geman">
-      <img src="G9.jpg">
+      <img src="G9.jpeg">
       <span class="brand-tag">Geman Premium</span>
       <h3>Quick Charger Kit G97</h3>
       <span class="price">Rs 1,650</span>
       <div class="action-buttons">
-        <a class="btn-order" href="https://wa.me/923279518790?text=Order G97">ORDER ON WHATSAPP</a>
-        <a class="btn-view" href="geman-g97.html">VIEW DETAILS</a>
-      </div>
-    </div>
-    <div class="card" data-brand="Geman">
-      <img src="G9.jpg">
-      <span class="brand-tag">Geman Premium</span>
-      <h3>Quick Charger Kit G97</h3>
-      <span class="price">Rs 1,650</span>
-      <div class="action-buttons">
-        <a class="btn-order" href="https://wa.me/923279518790?text=Order G97">ORDER ON WHATSAPP</a>
+        <a class="btn-order" href="https://wa.me/923279518790?text=Order G97 Charger">ORDER ON WHATSAPP</a>
         <a class="btn-view" href="geman-g97.html">VIEW DETAILS</a>
       </div>
     </div>
 
     <div class="card" data-brand="Geman">
-      <img src="G10.jpg">
+      <img src="G10.jpeg">
       <span class="brand-tag">Geman Elite</span>
       <h3>Super Fast G110 (22.5W)</h3>
       <span class="price">Rs 2,100</span>
       <div class="action-buttons">
-        <a class="btn-order" href="https://wa.me/923279518790?text=Order G110">ORDER ON WHATSAPP</a>
+        <a class="btn-order" href="https://wa.me/923279518790?text=Order G110 Super Fast">ORDER ON WHATSAPP</a>
         <a class="btn-view" href="geman-g110.html">VIEW DETAILS</a>
       </div>
     </div>
 
     <div class="card" data-brand="Geman">
-      <img src="G11.jpg">
+      <img src="G11.jpeg">
       <span class="brand-tag">Geman</span>
       <h3>Safe Charging Adapter G211S</h3>
       <span class="price">Rs 1,350</span>
       <div class="action-buttons">
-        <a class="btn-order" href="https://wa.me/923279518790?text=Order G211S">ORDER ON WHATSAPP</a>
+        <a class="btn-order" href="https://wa.me/923279518790?text=Order G211S Adapter">ORDER ON WHATSAPP</a>
         <a class="btn-view" href="g211s.html">VIEW DETAILS</a>
       </div>
     </div>
 
     <div class="card" data-brand="Geman">
-      <img src="G12.jpg">
+      <img src="G12.jpeg">
       <span class="brand-tag">Geman</span>
       <h3>Elite Data Cable GC-10</h3>
       <span class="price">Rs 550</span>
       <div class="action-buttons">
-        <a class="btn-order" href="https://wa.me/923279518790?text=Order GC-10">ORDER ON WHATSAPP</a>
+        <a class="btn-order" href="https://wa.me/923279518790?text=Order GC-10 Cable">ORDER ON WHATSAPP</a>
         <a class="btn-view" href="gc10.html">VIEW DETAILS</a>
       </div>
     </div>
 
     <div class="card" data-brand="Geman">
-      <img src="G13.jpg">
+      <img src="G13.jpeg">
       <span class="brand-tag">Geman</span>
       <h3>Braided Cable GC-09 (6A)</h3>
       <span class="price">Rs 450</span>
       <div class="action-buttons">
-        <a class="btn-order" href="https://wa.me/923279518790?text=Order GC-09">ORDER ON WHATSAPP</a>
+        <a class="btn-order" href="https://wa.me/923279518790?text=Order GC-09 Braided">ORDER ON WHATSAPP</a>
         <a class="btn-view" href="gc09.html">VIEW DETAILS</a>
       </div>
     </div>
 
     <div class="card" data-brand="Geman">
-      <img src="G14.jpg">
+      <img src="G14.jpeg">
       <span class="brand-tag">Geman</span>
       <h3>Travel Charger G96 Dual</h3>
       <span class="price">Rs 1,450</span>
       <div class="action-buttons">
-        <a class="btn-order" href="https://wa.me/923279518790?text=Order G96">ORDER ON WHATSAPP</a>
+        <a class="btn-order" href="https://wa.me/923279518790?text=Order G96 Dual Charger">ORDER ON WHATSAPP</a>
         <a class="btn-view" href="g96.html">VIEW DETAILS</a>
       </div>
     </div>
 
     <div class="card" data-brand="Geman">
-      <img src="G15.jpg">
+      <img src="G15.jpeg">
       <span class="brand-tag">Geman Audio</span>
       <h3>Stereo Handfree GH-02</h3>
       <span class="price">Rs 350</span>
       <div class="action-buttons">
-        <a class="btn-order" href="https://wa.me/923279518790?text=Order G15 Handfree">ORDER ON WHATSAPP</a>
+        <a class="btn-order" href="https://wa.me/923279518790?text=Order G15 GH-02 Handfree">ORDER ON WHATSAPP</a>
         <a class="btn-view" href="gh02.html">VIEW DETAILS</a>
       </div>
     </div>
 
     <div class="card" data-brand="Geman">
-      <img src="G16.jpg">
+      <img src="G16.jpeg">
       <span class="brand-tag">Geman Power</span>
       <h3>Fast Charging Adapter G101</h3>
       <span class="price">Rs 1,200</span>
@@ -259,7 +192,7 @@ header {
     </div>
 
     <div class="card" data-brand="Geman">
-      <img src="G17.jpg">
+      <img src="G17.jpeg">
       <span class="brand-tag">Geman Power</span>
       <h3>Type-C Fast Cable GC-15</h3>
       <span class="price">Rs 400</span>
@@ -270,15 +203,60 @@ header {
     </div>
 
     <div class="card" data-brand="Geman">
-      <img src="G18.jpg">
+      <img src="G18.jpeg">
       <span class="brand-tag">Geman Power</span>
       <h3>Micro USB Cable GC-08</h3>
       <span class="price">Rs 350</span>
       <div class="action-buttons">
-        <a class="btn-order" href="https://wa.me/923279518790?text=Order G18 Cable">ORDER ON WHATSAPP</a>
+        <a class="btn-order" href="https://wa.me/923279518790?text=Order G18 Micro Cable">ORDER ON WHATSAPP</a>
         <a class="btn-view" href="gc08.html">VIEW DETAILS</a>
       </div>
     </div>
+
+    <div class="card" data-brand="RoyalX">
+      <img src="34.jpeg">
+      <span class="brand-tag">RoyalX Power</span>
+      <h3>Fast Charging Cable RC-310</h3>
+      <span class="price">Rs 1,299</span>
+      <div class="action-buttons">
+        <a class="btn-order" href="https://wa.me/923279518790?text=Order RoyalX RC-310">ORDER ON WHATSAPP</a>
+        <a class="btn-view" href="rc310.html">VIEW DETAILS</a>
+      </div>
+    </div>
+
+    <div class="card" data-brand="RoyalX">
+      <img src="32.jpeg">
+      <span class="brand-tag">RoyalX Audio</span>
+      <h3>Type-C Handfree RH-6</h3>
+      <span class="price">Rs 900</span>
+      <div class="action-buttons">
+        <a class="btn-order" href="https://wa.me/923279518790?text=Order RH-6 Handfree">ORDER ON WHATSAPP</a>
+        <a class="btn-view" href="rh6.html">VIEW DETAILS</a>
+      </div>
+    </div>
+
+    <div class="card" data-brand="RoyalX">
+      <img src="30.jpeg">
+      <span class="brand-tag">RoyalX Audio</span>
+      <h3>Premium Handfree RH-15</h3>
+      <span class="price">Rs 450</span>
+      <div class="action-buttons">
+        <a class="btn-order" href="https://wa.me/923279518790?text=Order RH-15 Handfree">ORDER ON WHATSAPP</a>
+        <a class="btn-view" href="rh15.html">VIEW DETAILS</a>
+      </div>
+    </div>
+
+    <div class="card" data-brand="RoyalX">
+      <img src="33.jpeg">
+      <span class="brand-tag">RoyalX Audio</span>
+      <h3>Pure Sound Handfree RH-5</h3>
+      <span class="price">Rs 350</span>
+      <div class="action-buttons">
+        <a class="btn-order" href="https://wa.me/923279518790?text=Order RH-5 Handfree">ORDER ON WHATSAPP</a>
+        <a class="btn-view" href="rh5.html">VIEW DETAILS</a>
+      </div>
+    </div>
+
     <div class="card" data-brand="RoyalX">
       <div class="badge">HOT</div>
       <img src="3.jpg">
@@ -304,6 +282,17 @@ header {
     </div>
 
     <div class="card" data-brand="RoyalX">
+      <img src="27.jpeg">
+      <span class="brand-tag">RoyalX Sound</span>
+      <h3>Soundbar Wireless RS-4500</h3>
+      <span class="price">Rs 5,500</span>
+      <div class="action-buttons">
+        <a class="btn-order" href="https://wa.me/923279518790?text=Order RS-4500 Soundbar">ORDER ON WHATSAPP</a>
+        <a class="btn-view" href="rs4500.html">VIEW DETAILS</a>
+      </div>
+    </div>
+
+    <div class="card" data-brand="RoyalX">
       <div class="badge">3.4A FAST</div>
       <img src="5.jpg">
       <span class="brand-tag">RoyalX Power</span>
@@ -322,7 +311,7 @@ header {
       <h3>Micro USB Fast Cable R55 Black</h3>
       <span class="price">Rs 450</span>
       <div class="action-buttons">
-        <a class="btn-order" href="https://wa.me/923279518790?text=Order R55 Micro">ORDER ON WHATSAPP</a>
+        <a class="btn-order" href="https://wa.me/923279518790?text=Order R55 Micro Cable">ORDER ON WHATSAPP</a>
         <a class="btn-view" href="r55-micro.html">VIEW DETAILS</a>
       </div>
     </div>
@@ -331,10 +320,10 @@ header {
       <div class="badge">PREMIUM</div>
       <img src="7.jpg">
       <span class="brand-tag">RoyalX Audio</span>
-      <h3>RBT-820 Wireless Earbuds | HD Sound</h3>
+      <h3>RBT-820 Wireless Earbuds</h3>
       <span class="price">Rs 3,500</span>
       <div class="action-buttons">
-        <a class="btn-order" href="https://wa.me/923279518790?text=Order RBT-820">ORDER ON WHATSAPP</a>
+        <a class="btn-order" href="https://wa.me/923279518790?text=Order RBT-820 Earbuds">ORDER ON WHATSAPP</a>
         <a class="btn-view" href="rbt820.html">VIEW DETAILS</a>
       </div>
     </div>
@@ -343,11 +332,22 @@ header {
       <div class="badge">GAMING</div>
       <img src="8.jpg">
       <span class="brand-tag">RoyalX Audio</span>
-      <h3>RBT-400 Metal Earbuds | 24H Battery</h3>
+      <h3>RBT-400 Metal Earbuds</h3>
       <span class="price">Rs 5,250</span>
       <div class="action-buttons">
-        <a class="btn-order" href="https://wa.me/923279518790?text=Order Black Earbuds">ORDER ON WHATSAPP</a>
+        <a class="btn-order" href="https://wa.me/923279518790?text=Order RBT-400 Earbuds">ORDER ON WHATSAPP</a>
         <a class="btn-view" href="rbt400.html">VIEW DETAILS</a>
+      </div>
+    </div>
+
+    <div class="card" data-brand="RoyalX">
+      <img src="20-RBT-830_Pro_Gaming_Earbuds_High-Performance_Sound_for_Gamers.jpg">
+      <span class="brand-tag">RoyalX Audio</span>
+      <h3>Gaming Earbuds RBT-830 Pro</h3>
+      <span class="price">Rs 3,800</span>
+      <div class="action-buttons">
+        <a class="btn-order" href="https://wa.me/923279518790?text=Order RBT-830 Pro">ORDER ON WHATSAPP</a>
+        <a class="btn-view" href="rbt830.html">VIEW DETAILS</a>
       </div>
     </div>
 
@@ -363,43 +363,10 @@ header {
       </div>
     </div>
 
-    <div class="card" data-brand="Geman">
-      <img src="G10.jpg">
-      <span class="brand-tag">Geman Elite</span>
-      <h3>Super Fast G110 (22.5W)</h3>
-      <span class="price">Rs 2,100</span>
-      <div class="action-buttons">
-        <a class="btn-order" href="https://wa.me/923279518790?text=Order G110">ORDER ON WHATSAPP</a>
-        <a class="btn-view" href="geman-g110.html">VIEW DETAILS</a>
-      </div>
-    </div>
-
-    <div class="card" data-brand="RoyalX">
-      <img src="27.jpeg">
-      <span class="brand-tag">RoyalX Sound</span>
-      <h3>Soundbar Wireless RS-4500</h3>
-      <span class="price">Rs 5,500</span>
-      <div class="action-buttons">
-        <a class="btn-order" href="https://wa.me/923279518790?text=Order RS-4500">ORDER ON WHATSAPP</a>
-        <a class="btn-view" href="rs4500.html">VIEW DETAILS</a>
-      </div>
-    </div>
-
-    <div class="card" data-brand="RoyalX">
-      <img src="20-RBT-830_Pro_Gaming_Earbuds_High-Performance_Sound_for_Gamers.jpg">
-      <span class="brand-tag">RoyalX Audio</span>
-      <h3>Gaming Earbuds RBT-830 Pro</h3>
-      <span class="price">Rs 3,800</span>
-      <div class="action-buttons">
-        <a class="btn-order" href="https://wa.me/923279518790?text=Order RBT-830">ORDER ON WHATSAPP</a>
-        <a class="btn-view" href="rbt830.html">VIEW DETAILS</a>
-      </div>
-    </div>
-
     <div class="card" data-brand="Jcell">
       <img src="1.jpg">
       <span class="brand-tag">Jcell Elite</span>
-      <h3>Royalx RBT-815 Hybrid ANC + ENC</h3>
+      <h3>RBT-815 Hybrid ANC + ENC</h3>
       <span class="price">Rs 4,200</span>
       <div class="action-buttons">
         <a class="btn-order" href="https://wa.me/923279518790?text=Order Jcell RBT-815">ORDER ON WHATSAPP</a>
@@ -407,16 +374,6 @@ header {
       </div>
     </div>
 
-  </div>
-</div>
-
-<div id="loginModal">
-  <div class="modal-box">
-    <h2 style="color:var(--gold-text)">Admin Access</h2>
-    <input type="email" id="email" placeholder="Email Address">
-    <input type="password" id="pass" placeholder="Password">
-    <button onclick="handleLogin()" style="width:100%; background:var(--gold); border:none; padding:15px; border-radius:15px; font-weight:bold; cursor:pointer; margin-top:10px">LOGIN</button>
-    <p onclick="closeLogin()" style="color:#666; cursor:pointer; margin-top:20px">Cancel</p>
   </div>
 </div>
 
@@ -439,14 +396,6 @@ function filterProducts() {
   document.querySelectorAll(".card").forEach(c => {
     c.style.display = c.innerText.toLowerCase().includes(q) ? "flex" : "none";
   });
-}
-
-function openLogin() { document.getElementById('loginModal').style.display='flex'; }
-function closeLogin() { document.getElementById('loginModal').style.display='none'; }
-
-function handleLogin() {
-  alert("Redirecting to Admin Dashboard...");
-  closeLogin();
 }
 </script>
 
