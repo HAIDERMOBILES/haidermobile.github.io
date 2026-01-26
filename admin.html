@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Haider Mobiles | Admin Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --gold: #d4af37; --bg: #050505; }
+        body { background: var(--bg); color: #fff; font-family: 'Poppins', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .admin-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(212,175,55,0.3); padding: 30px; border-radius: 20px; width: 90%; max-width: 450px; backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        h2 { color: var(--gold); text-align: center; font-weight: 800; margin-bottom: 25px; letter-spacing: 1px; }
+        label { font-size: 11px; color: var(--gold); font-weight: 600; text-transform: uppercase; margin-bottom: 5px; display: block; }
+        input, select { width: 100%; padding: 12px; margin-bottom: 20px; background: #111; border: 1px solid #222; color: #fff; border-radius: 10px; outline: none; box-sizing: border-box; }
+        input:focus { border-color: var(--gold); }
+        button { background: linear-gradient(135deg, #d4af37 0%, #f9f295 100%); color: #000; border: none; padding: 15px; width: 100%; border-radius: 12px; font-weight: 800; cursor: pointer; transition: 0.3s; font-size: 14px; }
+        button:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(212,175,55,0.3); }
+        #status { text-align: center; margin-top: 15px; font-size: 13px; font-weight: 600; min-height: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="admin-card">
+    <h2>HAIDER ADMIN</h2>
+    
+    <label>GitHub Token</label>
+    <input type="password" id="token" placeholder="Paste your Token here">
+
+    <label>Product Name</label>
+    <input type="text" id="p-name" placeholder="e.g. RoyalX Bass Handfree">
+
+    <label>Price (with Rs)</label>
+    <input type="text" id="p-price" placeholder="e.g. Rs 450">
+
+    <label>Select Brand</label>
+    <select id="p-brand">
+        <option value="Geman">Geman</option>
+        <option value="RoyalX">RoyalX</option>
+        <option value="Strike">Strike</option>
+        <option value="Jcell">Jcell</option>
+    </select>
+
+    <label>Image Name (e.g. 35.jpeg)</label>
+    <input type="text" id="p-img" placeholder="Exact image name on GitHub">
+
+    <button onclick="uploadToGithub()">🚀 PUSH TO WEBSITE</button>
+    <div id="status"></div>
+</div>
+
+<script>
+async function uploadToGithub() {
+    const token = document.getElementById('token').value;
+    const status = document.getElementById('status');
+    const repo = "haidermobiles/haidermobile"; // Aapka sahi Path
+    const path = "data.json";
+
+    if(!token) { alert("Pehle Token toh dalein!"); return; }
+    
+    status.innerText = "⏳ Connecting to GitHub...";
+    status.style.color = "#d4af37";
+
+    try {
+        // 1. Pehle data.json ki mojooda file uthao
+        const res = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
+            headers: { Authorization: `token ${token}` }
+        });
+
+        if(!res.ok) throw new Error("Could not find data.json");
+
+        const fileData = await res.json();
+        const sha = fileData.sha;
+        // Base64 decode karke content nikalna
+        const currentContent = JSON.parse(atob(fileData.content));
+
+        // 2. Naya product banao
+        const newProduct = {
+            id: "ID-" + Date.now(),
+            name: document.getElementById('p-name').value,
+            price: document.getElementById('p-price').value,
+            brand: document.getElementById('p-brand').value,
+            img: document.getElementById('p-img').value
+        };
+
+        // 3. Naya product sabse upar add karo
+        currentContent.unshift(newProduct);
+
+        // 4. Wapis GitHub par save karo
+        const update = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
+            method: 'PUT',
+            headers: { 
+                Authorization: `token ${token}`,
+                'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify({
+                message: `Added ${newProduct.name}`,
+                content: b
