@@ -14,7 +14,7 @@ body { margin: 0; background: var(--bg); color: #fff; font-family: 'Poppins', sa
 .top-header { position: sticky; top: 0; z-index: 1000; background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(15px); border-bottom: 1px solid var(--border); padding: 12px 15px; }
 .header-main { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 12px; }
 .store-name { font-weight: 800; color: var(--gold); font-size: 1.2rem; }
-.search-box { background: rgba(255,255,255,0.08); border: 1px solid #333; color: #fff; padding: 7px 15px; border-radius: 20px; width: 30%; outline: none; font-size: 13px; }
+.search-box { background: rgba(255,255,255,0.08); border: 1px solid #333; color: #fff; padding: 7px 15px; border-radius: 20px; width: 35%; outline: none; font-size: 13px; }
 
 /* Auth Buttons */
 .auth-buttons { display: flex; gap: 8px; }
@@ -28,14 +28,28 @@ body { margin: 0; background: var(--bg); color: #fff; font-family: 'Poppins', sa
 .brand-chip { padding: 6px 18px; background: rgba(212, 175, 55, 0.05); border: 1px solid var(--border); border-radius: 20px; font-size: 12px; white-space: nowrap; cursor: pointer; color: #888; }
 .brand-chip:hover { color: var(--gold); border-color: var(--gold); }
 
-/* --- LAYOUT --- */
+/* --- BRAND SECTIONS --- */
 .brand-section { padding: 30px 6%; }
 .brand-title { font-size: 22px; font-weight: 800; margin-bottom: 20px; border-left: 5px solid var(--gold); padding-left: 15px; }
 
+/* Horizontal Scroll for Mobile, Grid for Desktop */
 .product-container { 
     display: grid; 
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
     gap: 25px; 
+}
+
+@media (max-width: 768px) {
+    .brand-section { padding: 20px 0 10px 15px; }
+    .product-container { 
+        display: flex; 
+        overflow-x: auto; 
+        gap: 15px; 
+        padding-bottom: 15px; 
+        scrollbar-width: none;
+    }
+    .product-container::-webkit-scrollbar { display: none; }
+    .card { min-width: 220px; }
 }
 
 /* --- CARD STYLE --- */
@@ -47,30 +61,12 @@ body { margin: 0; background: var(--bg); color: #fff; font-family: 'Poppins', sa
     text-align: center;
     position: relative;
     overflow: hidden;
-    cursor: pointer;
 }
-
-.card:hover {
-    transform: translateY(-10px);
-    border-color: var(--gold);
-    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
-}
-
-.card img { 
-    width: 100%; height: 200px; object-fit: contain; 
-    background: #fff; border-radius: 15px; padding: 10px; 
-    margin-bottom: 15px;
-}
-
+.card:hover { border-color: var(--gold); transform: translateY(-5px); }
+.card img { width: 100%; height: 200px; object-fit: contain; background: #fff; border-radius: 15px; padding: 10px; margin-bottom: 15px; }
 .card h3 { font-size: 14px; height: 40px; overflow: hidden; margin: 10px 0; color: #ddd; }
 .price { color: #fff; font-weight: 800; font-size: 18px; display: block; margin-bottom: 15px; }
 .btn-view { display: block; background: var(--gold); color: #000; text-decoration: none; font-size: 12px; font-weight: 800; padding: 10px; border-radius: 10px; }
-
-/* MOBILE */
-@media (max-width: 768px) {
-    .product-container { display: flex; overflow-x: auto; gap: 15px; padding-bottom: 15px; }
-    .card { min-width: 200px; }
-}
 </style>
 </head>
 <body>
@@ -88,7 +84,7 @@ body { margin: 0; background: var(--bg); color: #fff; font-family: 'Poppins', sa
 </div>
 
 <div id="brand-wrapper">
-    <p style="text-align:center; padding:50px;">Loading Products from Firebase...</p>
+    <p style="text-align:center; padding:100px; color:var(--gold);">Initializing Haider Mobiles Store...</p>
 </div>
 
 <script type="module">
@@ -109,23 +105,23 @@ body { margin: 0; background: var(--bg); color: #fff; font-family: 'Poppins', sa
     const auth = getAuth(app);
     const db = getDatabase(app);
 
-    // --- 1. USER AUTH CHECK ---
+    // --- 1. User Header Logic ---
     onAuthStateChanged(auth, (user) => {
         const headerName = document.querySelector('.store-name');
         if (user) {
             const firstName = user.displayName ? user.displayName.split(' ')[0] : 'User';
-            headerName.innerHTML = `Welcome, ${firstName} | <span id="logout-link" style="font-size:12px; cursor:pointer; color:red;">Logout</span>`;
+            headerName.innerHTML = `Welcome, ${firstName} | <span id="logout-link" style="font-size:10px; cursor:pointer; color:red;">Logout</span>`;
             document.getElementById('logout-link').onclick = () => signOut(auth).then(() => window.location.reload());
         }
     });
 
-    // --- 2. LOAD PRODUCTS FROM FIREBASE ---
+    // --- 2. Realtime Products & Brands Logic ---
     const wrapper = document.getElementById('brand-wrapper');
     const chipContainer = document.getElementById('brand-chips');
-    
+
     onValue(ref(db, 'products'), (snapshot) => {
         if (!snapshot.exists()) {
-            wrapper.innerHTML = "<p style='text-align:center; padding:50px;'>No products found. Add some from Admin Panel!</p>";
+            wrapper.innerHTML = "<p style='text-align:center; padding:100px;'>Dukaan Khali Hai! Admin Panel se Mobiles add karein.</p>";
             return;
         }
 
@@ -133,17 +129,17 @@ body { margin: 0; background: var(--bg); color: #fff; font-family: 'Poppins', sa
         const allProducts = Object.keys(data).map(key => ({ id: key, ...data[key] }));
         const brands = [...new Set(allProducts.map(p => p.brand))];
 
-        // Chips setup
-        chipContainer.innerHTML = `<div class="brand-chip" onclick="window.scrollTo(0,0)">All Collections</div>`;
+        // Chips/Brands Navigation
+        chipContainer.innerHTML = `<div class="brand-chip" onclick="window.scrollTo({top:0, behavior:'smooth'})">All</div>`;
         wrapper.innerHTML = "";
 
         brands.forEach(brandName => {
             const brandProducts = allProducts.filter(p => p.brand === brandName);
             
-            // Add Chip
+            // Add Brand Button (Chip)
             chipContainer.innerHTML += `<div class="brand-chip" onclick="document.getElementById('section-${brandName}').scrollIntoView({behavior: 'smooth', block: 'center'})">${brandName}</div>`;
 
-            // Add Section
+            // Add Brand Section (with horizontal scroll support)
             let sectionHTML = `
                 <div class="brand-section" id="section-${brandName}">
                     <div class="brand-title">${brandName} <span>Collection</span></div>
@@ -161,21 +157,13 @@ body { margin: 0; background: var(--bg); color: #fff; font-family: 'Poppins', sa
             `;
             wrapper.innerHTML += sectionHTML;
         });
-
-        // Search functionality updated for Firebase data
+        
+        // Search Logic
         document.getElementById('search').onkeyup = function() {
             let q = this.value.toLowerCase();
-            if(q === "") { /* Page will auto-refresh via onValue */ return; }
+            if(q === "") { onValue(); return; } 
             const filtered = allProducts.filter(p => p.name.toLowerCase().includes(q));
-            wrapper.innerHTML = `
-                <div class="brand-section">
-                    <div class="brand-title">Results: ${q}</div>
-                    <div class="product-container">
-                        ${filtered.map(p => `
-                            <div class="card"><img src="${p.img}"><h3>${p.name}</h3><span class="price">${p.price}</span><a href="product.html?id=${p.id}" class="btn-view">VIEW</a></div>
-                        `).join('')}
-                    </div>
-                </div>`;
+            wrapper.innerHTML = `<div class="brand-section"><div class="brand-title">Search: ${q}</div><div class="product-container" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));">${filtered.map(p => `<div class="card"><img src="${p.img}"><h3>${p.name}</h3><span class="price">${p.price}</span><a href="product.html?id=${p.id}" class="btn-view">VIEW</a></div>`).join('')}</div></div>`;
         };
     });
 </script>
