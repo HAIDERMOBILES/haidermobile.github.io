@@ -156,4 +156,36 @@ body { margin: 0; background: var(--bg); color: #fff; font-family: 'Poppins', sa
         brands.forEach(brandName => {
             const chip = document.createElement('div');
             chip.className = 'brand-chip';
-            chip.innerText =
+            chip.innerText = brandName;
+            chip.onclick = () => document.getElementById(`section-${brandName}`).scrollIntoView({behavior: 'smooth', block: 'center'});
+            chipContainer.appendChild(chip);
+
+            const brandProducts = allProducts.filter(p => p.brand === brandName);
+            wrapper.innerHTML += `
+                <div class="brand-section" id="section-${brandName}">
+                    <div class="brand-title">${brandName.toUpperCase()}</div>
+                    <div class="product-container">
+                        ${brandProducts.map(p => `
+                            <div class="card">
+                                <img src="${p.img}">
+                                <h3>${p.name}</h3>
+                                <span class="price">${p.price}</span>
+                                <a href="product.html?id=${p.id}" class="btn-view">VIEW DETAILS</a>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        });
+    });
+
+    // Search
+    document.getElementById('search').oninput = (e) => {
+        const term = e.target.value.toLowerCase();
+        document.querySelectorAll('.card').forEach(card => {
+            card.style.display = card.querySelector('h3').innerText.toLowerCase().includes(term) ? "block" : "none";
+        });
+    };
+</script>
+</body>
+</html>
