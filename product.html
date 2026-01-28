@@ -13,9 +13,8 @@
         /* Main Product Card */
         .product-main { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; background: var(--card); padding: 25px; border-radius: 20px; border: 1px solid #222; margin-bottom: 40px; }
         .img-container { background: white; border-radius: 15px; padding: 15px; display: flex; align-items: center; justify-content: center; height: 400px; }
-        .img-container img { max-width: 1000%; max-height: 100%; object-fit: contain; }
+        .img-container img { max-width: 100%; max-height: 100%; object-fit: contain; }
 
-        /* Content Side */
         .info-side { display: flex; flex-direction: column; }
         .brand-name { color: var(--gold); font-weight: 800; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
         h1 { font-size: 28px; margin: 10px 0; color: #fff; }
@@ -24,7 +23,7 @@
         .price-now { font-size: 30px; font-weight: 800; color: var(--gold); }
         .price-old { text-decoration: line-through; color: #666; font-size: 18px; }
 
-        /* Technical Specs Grid */
+        /* Specs Grid */
         .specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0; }
         .spec-item { background: #222; padding: 10px 15px; border-radius: 10px; border-left: 3px solid var(--gold); }
         .spec-label { font-size: 10px; color: #888; display: block; text-transform: uppercase; }
@@ -32,36 +31,14 @@
 
         .desc-text { font-size: 14px; color: #ccc; border-top: 1px solid #333; padding-top: 15px; margin-top: 10px; }
         
-        .buy-btn { display: block; background: #25d366; color: white; text-align: center; padding: 18px; border-radius: 12px; text-decoration: none; font-weight: 800; margin-top: auto; transition: 0.3s; }
+        .buy-btn { display: block; background: #25d366; color: white; text-align: center; padding: 18px; border-radius: 12px; text-decoration: none; font-weight: 800; margin-top: 30px; transition: 0.3s; }
         .buy-btn:hover { background: #1ebd5b; transform: translateY(-2px); }
 
         /* Related Products */
-        .related-title { font-size: 22px; font-weight: 800; margin-bottom: 20px; color: #fff; }
+        .related-title { font-size: 22px; font-weight: 800; margin-bottom: 20px; color: #fff; border-left: 4px solid var(--gold); padding-left: 15px; }
         .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; }
         .related-card { background: var(--card); padding: 15px; border-radius: 15px; text-decoration: none; color: white; border: 1px solid #222; text-align: center; transition: 0.3s; }
         .related-card:hover { border-color: var(--gold); }
         .related-card img { width: 100%; height: 130px; object-fit: contain; margin-bottom: 10px; background: white; border-radius: 10px; padding: 5px; }
 
         @media (max-width: 768px) { .product-main { grid-template-columns: 1fr; } .img-container { height: 300px; } }
-    </style>
-</head>
-<body>
-
-<div class="container">
-    <div id="product-area">
-        <p style="text-align:center; padding:50px;">Loading Product Details...</p>
-    </div>
-
-    <div style="margin-top: 50px;">
-        <h2 class="related-title">More From Haider Mobiles</h2>
-        <div id="more-products" class="related-grid"></div>
-    </div>
-</div>
-
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getDatabase, ref, get, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-
-    const firebaseConfig = {
-        apiKey: "AIzaSyCYzkMGDwWZGx_PlrNfjloYZ6PVQRne9wg",
-        authDomain: "web-app-4f3a
