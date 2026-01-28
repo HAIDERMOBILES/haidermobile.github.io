@@ -24,13 +24,16 @@
         currentUser = user;
     });
 
-    // 2. Load Cart Logic
-    function loadCart() {
+    // 2. Load Cart Logic (Isse window object ke saath jora hai)
+    window.loadCart = () => {
         const cart = JSON.parse(localStorage.getItem('haider_cart')) || [];
         const cartList = document.getElementById('cartList');
         const summaryBox = document.getElementById('summaryBox');
         const emptyCart = document.getElementById('emptyCart');
         const totalDisplay = document.getElementById('totalPrice');
+
+        // Check if elements exist to prevent errors
+        if (!cartList || !summaryBox || !emptyCart) return;
 
         if (cart.length === 0) {
             cartList.innerHTML = "";
@@ -59,15 +62,15 @@
                     </div>
                 </div>`;
         });
-        totalDisplay.innerText = "Rs " + total.toLocaleString();
+        if(totalDisplay) totalDisplay.innerText = "Rs " + total.toLocaleString();
     }
 
-    // Functions ko window object se attach karna taake HTML button unhe dekh sake
+    // Functions ko window object se attach karna
     window.removeItem = (index) => {
         let cart = JSON.parse(localStorage.getItem('haider_cart')) || [];
         cart.splice(index, 1);
         localStorage.setItem('haider_cart', JSON.stringify(cart));
-        loadCart();
+        window.loadCart(); // Ab ye loadCart ko dhoond lega
     };
 
     window.sendWhatsApp = async () => {
@@ -77,7 +80,6 @@
         const totalAmount = document.getElementById('totalPrice').innerText;
         const itemsNames = cart.map(i => i.name).join(", ");
 
-        // --- YAHA ORDER SAVE HO RAHA HAI ---
         if (currentUser) {
             try {
                 const ordersRef = ref(db, 'users/' + currentUser.uid + '/orders');
@@ -87,7 +89,7 @@
                     total: totalAmount,
                     status: "Processing"
                 });
-                console.log("Order saved to database!");
+                console.log("Order saved!");
             } catch (e) {
                 console.error("Database error:", e);
             }
@@ -95,7 +97,6 @@
             alert("Please login so we can save your order history!");
         }
 
-        // WhatsApp Message logic
         let message = "📦 *NEW ORDER - HAIDER MOBILES*%0A--------------------------%0A";
         cart.forEach((item, i) => {
             message += `*${i+1}.* ${item.name} - ${item.price}%0A`;
@@ -109,5 +110,5 @@
     };
 
     // Start
-    loadCart();
+    window.loadCart();
 </script>
