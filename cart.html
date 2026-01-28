@@ -1,5 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Bag | Haider Mobiles</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root { --gold: #d4af37; --bg: #000; --card: #0a0a0a; --border: rgba(212, 175, 55, 0.2); }
+        body { background: var(--bg); color: #fff; font-family: 'Poppins', sans-serif; margin: 0; padding: 20px; }
+        .container { max-width: 600px; margin: 0 auto; }
+        h2 { color: var(--gold); text-align: center; font-weight: 800; letter-spacing: 1px; }
+        
+        .cart-item { 
+            background: var(--card); border: 1px solid var(--border); 
+            display: flex; align-items: center; padding: 15px; 
+            border-radius: 15px; margin-bottom: 15px; position: relative;
+        }
+        .cart-item img { width: 70px; height: 70px; object-fit: contain; margin-right: 15px; }
+        .item-info h3 { margin: 0; font-size: 16px; color: #fff; }
+        .item-info p { margin: 5px 0 0; color: var(--gold); font-weight: bold; }
+        
+        .remove-btn { position: absolute; right: 15px; color: #ff4444; cursor: pointer; font-size: 18px; }
+        
+        .summary-box { 
+            background: var(--card); border-top: 2px solid var(--gold); 
+            padding: 20px; border-radius: 15px; margin-top: 30px; text-align: center;
+        }
+        .total-row { display: flex; justify-content: space-between; font-size: 20px; margin-bottom: 20px; }
+        
+        .btn-checkout { 
+            background: var(--gold); color: #000; width: 100%; border: none; 
+            padding: 15px; border-radius: 10px; font-weight: 800; cursor: pointer;
+            text-decoration: none; display: block;
+        }
+        #emptyCart { text-align: center; padding: 50px 0; display: none; }
+        #emptyCart i { font-size: 50px; color: #333; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2><i class="fa fa-bag-shopping"></i> YOUR BAG</h2>
+    
+    <div id="cartList"></div>
+
+    <div id="emptyCart">
+        <i class="fa fa-cart-plus"></i>
+        <p>Your bag is empty!</p>
+        <a href="index.html" style="color:var(--gold); text-decoration:none;">Go Shopping</a>
+    </div>
+
+    <div id="summaryBox" class="summary-box">
+        <div class="total-row">
+            <span>Total:</span>
+            <span id="totalPrice" style="color:var(--gold);">Rs 0</span>
+        </div>
+        <button onclick="window.sendWhatsApp()" class="btn-checkout">ORDER ON WHATSAPP</button>
+    </div>
+</div>
+
 <script type="module">
-    // 1. Firebase Imports (Zaroori hain)
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
     import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
@@ -18,22 +78,17 @@
     const auth = getAuth(app);
     const db = getDatabase(app);
 
-    // Global variable user ke liye
     let currentUser = null;
-    onAuthStateChanged(auth, (user) => {
-        currentUser = user;
-    });
+    onAuthStateChanged(auth, (user) => { currentUser = user; });
 
-    // 2. Load Cart Logic (Isse window object ke saath jora hai)
-    window.loadCart = () => {
+    window.loadCart = function() {
         const cart = JSON.parse(localStorage.getItem('haider_cart')) || [];
         const cartList = document.getElementById('cartList');
         const summaryBox = document.getElementById('summaryBox');
         const emptyCart = document.getElementById('emptyCart');
         const totalDisplay = document.getElementById('totalPrice');
 
-        // Check if elements exist to prevent errors
-        if (!cartList || !summaryBox || !emptyCart) return;
+        if (!cartList) return;
 
         if (cart.length === 0) {
             cartList.innerHTML = "";
@@ -52,63 +107,45 @@
             total += parseInt(cleanPrice) || 0;
             cartList.innerHTML += `
                 <div class="cart-item">
-                    <img src="${item.img}" onerror="this.src='https://via.placeholder.com/80?text=Mobile'">
+                    <img src="${item.img}">
                     <div class="item-info">
                         <h3>${item.name}</h3>
                         <p>${item.price}</p>
                     </div>
-                    <div class="remove-btn" onclick="window.removeItem(${index})">
-                        <i class="fa fa-trash-can"></i>
-                    </div>
+                    <i class="fa fa-trash-can remove-btn" onclick="window.removeItem(${index})"></i>
                 </div>`;
         });
-        if(totalDisplay) totalDisplay.innerText = "Rs " + total.toLocaleString();
-    }
+        totalDisplay.innerText = "Rs " + total.toLocaleString();
+    };
 
-    // Functions ko window object se attach karna
     window.removeItem = (index) => {
         let cart = JSON.parse(localStorage.getItem('haider_cart')) || [];
         cart.splice(index, 1);
         localStorage.setItem('haider_cart', JSON.stringify(cart));
-        window.loadCart(); // Ab ye loadCart ko dhoond lega
+        window.loadCart();
     };
 
     window.sendWhatsApp = async () => {
         const cart = JSON.parse(localStorage.getItem('haider_cart')) || [];
-        if (cart.length === 0) return;
-
         const totalAmount = document.getElementById('totalPrice').innerText;
         const itemsNames = cart.map(i => i.name).join(", ");
 
         if (currentUser) {
             try {
-                const ordersRef = ref(db, 'users/' + currentUser.uid + '/orders');
-                await push(ordersRef, {
-                    date: new Date().toLocaleDateString(),
+                await push(ref(db, 'users/' + currentUser.uid + '/orders'), {
+                    date: new Date().toLocaleString(),
                     items: itemsNames,
                     total: totalAmount,
                     status: "Processing"
                 });
-                console.log("Order saved!");
-            } catch (e) {
-                console.error("Database error:", e);
-            }
-        } else {
-            alert("Please login so we can save your order history!");
+            } catch (e) { console.error(e); }
         }
 
-        let message = "📦 *NEW ORDER - HAIDER MOBILES*%0A--------------------------%0A";
-        cart.forEach((item, i) => {
-            message += `*${i+1}.* ${item.name} - ${item.price}%0A`;
-        });
-        message += "--------------------------%0A";
-        message += `💰 *TOTAL: ${totalAmount}*%0A%0A`;
-        message += "Please confirm my order!";
-        
-        const phone = "923279518790";
-        window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
+        let message = `📦 *NEW ORDER - HAIDER MOBILES*%0AItems: ${itemsNames}%0A*Total: ${totalAmount}*`;
+        window.open(`https://wa.me/923279518790?text=${message}`, '_blank');
     };
 
-    // Start
     window.loadCart();
 </script>
+</body>
+</html>
