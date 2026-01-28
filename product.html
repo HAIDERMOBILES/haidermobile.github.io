@@ -3,39 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Details | Haider Mobiles</title>
+    <title>Haider Mobiles | Premium Product</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #d4af37; --bg: #0b0b0b; --card: #161616; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; background: var(--bg); color: white; }
-        .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
-        .product-main { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; background: var(--card); padding: 25px; border-radius: 20px; border: 1px solid #333; }
-        .img-container { background: white; border-radius: 15px; padding: 15px; height: 350px; display: flex; align-items: center; justify-content: center; }
-        .img-container img { max-width: 100%; max-height: 100%; object-fit: contain; }
-        .price-now { font-size: 32px; font-weight: 800; color: var(--gold); margin: 10px 0; display: block; }
-        .specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0; }
-        .spec-item { background: #222; padding: 10px; border-radius: 10px; border-left: 3px solid var(--gold); }
-        .spec-label { font-size: 10px; color: #888; display: block; text-transform: uppercase; }
-        .buy-btn { display: block; background: #25d366; color: white; text-align: center; padding: 18px; border-radius: 12px; text-decoration: none; font-weight: 800; margin-top: 20px; }
+        :root { --gold: #d4af37; --bg: #080808; --card: #121212; --text: #e0e0e0; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; background: var(--bg); color: var(--text); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+        /* --- Main Product Section --- */
+        .product-wrapper { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; background: var(--card); padding: 40px; border-radius: 30px; border: 1px solid #222; box-shadow: 0 20px 40px rgba(0,0,0,0.5); margin-top: 20px; }
+        
+        .img-section { position: sticky; top: 20px; background: #fff; border-radius: 20px; display: flex; align-items: center; justify-content: center; height: 450px; padding: 20px; }
+        .img-section img { max-width: 100%; max-height: 100%; object-fit: contain; transition: 0.3s; }
+        .img-section:hover img { transform: scale(1.05); }
+
+        .info-section { display: flex; flex-direction: column; }
+        .brand-badge { background: rgba(212, 175, 55, 0.1); color: var(--gold); padding: 6px 15px; border-radius: 50px; font-size: 11px; font-weight: 800; text-transform: uppercase; width: fit-content; margin-bottom: 15px; border: 1px solid var(--gold); }
+        h1 { font-size: 34px; font-weight: 800; margin: 0; color: #fff; letter-spacing: -0.5px; }
+        
+        .price-container { margin: 20px 0; display: flex; align-items: baseline; gap: 15px; }
+        .price-now { font-size: 36px; font-weight: 800; color: var(--gold); }
+        .price-old { font-size: 18px; color: #555; text-decoration: line-through; }
+
+        .specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 25px 0; }
+        .spec-box { background: #1a1a1a; padding: 12px; border-radius: 12px; border: 1px solid #252525; }
+        .spec-label { font-size: 10px; color: #777; text-transform: uppercase; display: block; }
+        .spec-value { font-size: 14px; font-weight: 600; color: #fff; }
+
+        .btn-whatsapp { display: flex; align-items: center; justify-content: center; gap: 10px; background: #25d366; color: #fff; text-decoration: none; padding: 18px; border-radius: 15px; font-weight: 800; font-size: 18px; margin-top: 20px; transition: 0.3s; box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2); }
+        .btn-whatsapp:hover { transform: translateY(-3px); background: #1ebd5b; }
+
+        /* --- Gallery Section --- */
+        .gallery-title { font-size: 26px; font-weight: 800; color: #fff; margin: 60px 0 30px; display: flex; align-items: center; gap: 15px; }
+        .gallery-title::after { content: ''; flex: 1; height: 1px; background: #222; }
+        
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+        .product-card { background: var(--card); border: 1px solid #222; border-radius: 20px; padding: 15px; text-decoration: none; color: inherit; transition: 0.3s; text-align: center; }
+        .product-card:hover { border-color: var(--gold); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+        .product-card img { width: 100%; height: 180px; object-fit: contain; background: white; border-radius: 15px; margin-bottom: 15px; padding: 10px; }
+        .product-card h3 { font-size: 15px; margin: 10px 0; color: #fff; }
+        .product-card .p-price { color: var(--gold); font-weight: 800; font-size: 18px; }
+
+        @media (max-width: 900px) { 
+            .product-wrapper { grid-template-columns: 1fr; padding: 20px; }
+            .img-section { height: 300px; position: relative; }
+            .product-grid { grid-template-columns: 1fr 1fr; }
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div id="main-content">
-        <h2 style="text-align:center; padding:100px;">⚡ Loading Product...</h2>
+        <div style="text-align:center; padding:100px; color:var(--gold);">⚡ Loading Premium Design...</div>
     </div>
+
+    <h2 class="gallery-title">More From Haider Mobiles</h2>
+    <div id="product-gallery" class="product-grid">
+        </div>
 </div>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+    import { getDatabase, ref, get, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyCYzkMGDwWZGx_PlrNfjloYZ6PVQRne9wg",
         authDomain: "web-app-4f3a1.firebaseapp.com",
         projectId: "web-app-4f3a1",
-        databaseURL: "https://web-app-4f3a1-default-rtdb.firebaseio.com", // Make sure this is correct
         storageBucket: "web-app-4f3a1.firebasestorage.app",
         messagingSenderId: "222099203820",
         appId: "1:222099203820:web:778e204d2960181dfba7c9"
@@ -44,41 +79,61 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    const productId = new URLSearchParams(window.location.search).get('id');
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('id');
 
+    // 1. Fetch Selected Product
     if (productId) {
-        // Direct Path Use Karein
-        const pRef = ref(db, 'products/' + productId);
-        get(pRef).then((snapshot) => {
-            if (snapshot.exists()) {
-                const p = snapshot.val();
+        onValue(ref(db, 'products/' + productId), (snapshot) => {
+            const p = snapshot.val();
+            if (p) {
                 document.getElementById('main-content').innerHTML = `
-                    <div class="product-main">
-                        <div class="img-container"><img src="${p.img}"></div>
-                        <div>
-                            <span style="color:var(--gold); font-weight:800; font-size:12px;">${p.brand || 'OFFICIAL'}</span>
-                            <h1 style="margin:5px 0;">${p.name}</h1>
-                            <span class="price-now">${p.price}</span>
+                    <div class="product-wrapper">
+                        <div class="img-section">
+                            <img src="${p.img}" alt="${p.name}">
+                        </div>
+                        <div class="info-section">
+                            <span class="brand-badge">${p.brand || 'Official Stock'}</span>
+                            <h1>${p.name}</h1>
+                            <div class="price-container">
+                                <span class="price-now">${p.price}</span>
+                                ${p.oldPrice ? `<span class="price-old">${p.oldPrice}</span>` : ''}
+                            </div>
                             <div class="specs-grid">
-                                <div class="spec-item"><span class="spec-label">Condition</span><b>10/10 Fresh</b></div>
-                                <div class="spec-item"><span class="spec-label">Warranty</span><b>Checking</b></div>
+                                <div class="spec-box"><span class="spec-label">Condition</span><span class="spec-value">10/10 New</span></div>
+                                <div class="spec-box"><span class="spec-label">Warranty</span><span class="spec-value">7 Days Check</span></div>
+                                <div class="spec-box"><span class="spec-label">Delivery</span><span class="spec-value">Nationwide</span></div>
+                                <div class="spec-box"><span class="spec-label">Payment</span><span class="spec-value">Cash on Delivery</span></div>
                             </div>
-                            <div style="margin-top:20px; border-top:1px solid #333; padding-top:15px;">
-                                <b style="color:var(--gold)">About this item:</b>
-                                <p style="font-size:14px; color:#ccc;">${p.description || "High quality product from ImgBB Direct link."}</p>
+                            <div style="margin-bottom:20px;">
+                                <h4 style="color:var(--gold); margin-bottom:8px;">Description</h4>
+                                <p style="font-size:14px; color:#bbb; margin:0; line-height:1.6;">${p.description || 'Professional grade mobile accessory. Durable and high-performance guaranteed.'}</p>
                             </div>
-                            <a href="https://wa.me/923000000000?text=I want to buy: ${p.name}" class="buy-btn">ORDER VIA WHATSAPP</a>
+                            <a href="https://wa.me/923000000000?text=I want to buy: ${p.name}" class="btn-whatsapp">
+                                💬 ORDER ON WHATSAPP
+                            </a>
                         </div>
                     </div>`;
-            } else {
-                document.getElementById('main-content').innerHTML = "Product not found. ID: " + productId;
             }
-        }).catch(err => {
-            document.getElementById('main-content').innerHTML = "Error: " + err.message;
         });
-    } else {
-        document.getElementById('main-content').innerHTML = "No Product Selected!";
     }
+
+    // 2. Fetch Entire Gallery
+    onValue(ref(db, 'products'), (snapshot) => {
+        const gallery = document.getElementById('product-gallery');
+        gallery.innerHTML = "";
+        snapshot.forEach((child) => {
+            const p = child.val();
+            if (child.key !== productId) {
+                gallery.innerHTML += `
+                    <a href="product.html?id=${child.key}" class="product-card">
+                        <img src="${p.img}">
+                        <h3>${p.name}</h3>
+                        <div class="p-price">${p.price}</div>
+                    </a>`;
+            }
+        });
+    });
 </script>
 </body>
 </html>
