@@ -7,78 +7,58 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #d4af37; --bg: #000; --card: #111; }
-        body { background: var(--bg); color: #fff; font-family: 'Poppins', sans-serif; margin: 0; padding: 20px; }
-        
+        :root { --gold: #d4af37; --bg: #000; --card: #111; --border: rgba(212, 175, 55, 0.2); }
+        body { background: var(--bg); color: #fff; font-family: 'Poppins', sans-serif; margin: 0; padding: 15px; }
         .container { max-width: 600px; margin: 0 auto; }
         
         /* Verification Alert */
         #verifyAlert { 
             display: none; background: linear-gradient(90deg, #ff4444, #cc0000); 
-            color: #fff; padding: 15px; text-align: center; font-weight: bold; 
-            border-radius: 12px; margin-bottom: 25px; border: 1px solid rgba(255,255,255,0.2);
+            color: #fff; padding: 12px; text-align: center; font-weight: bold; 
+            border-radius: 12px; margin-bottom: 20px; font-size: 13px;
         }
-        #verifyAlert button { 
-            background: #fff; color: #000; border: none; padding: 6px 15px; 
-            border-radius: 8px; margin-left: 10px; cursor: pointer; font-weight: 800; 
-        }
+        #verifyAlert button { background: #fff; color: #000; border: none; padding: 5px 10px; border-radius: 6px; margin-left: 8px; cursor: pointer; font-weight: 800; }
 
-        /* Profile Card */
-        .info-card { 
-            background: var(--card); padding: 25px; border-radius: 20px; 
-            border: 1px solid rgba(212, 175, 55, 0.2); box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
-        }
-        .info-card h3 { 
-            color: var(--gold); margin-top: 0; border-bottom: 1px solid #222; 
-            padding-bottom: 15px; display: flex; align-items: center; gap: 10px;
-        }
+        /* Cards */
+        .info-card { background: var(--card); padding: 20px; border-radius: 15px; border: 1px solid var(--border); margin-bottom: 20px; }
+        h3 { color: var(--gold); margin-top: 0; border-bottom: 1px solid #222; padding-bottom: 10px; font-size: 18px; display: flex; align-items: center; gap: 10px; }
         
-        .data-row { margin: 15px 0; border-bottom: 1px solid #222; padding-bottom: 10px; }
-        .label { color: #888; font-size: 11px; text-transform: uppercase; display: block; }
-        .value { font-size: 16px; font-weight: 600; color: #efefef; }
+        .data-row { margin: 12px 0; }
+        .label { color: #888; font-size: 10px; text-transform: uppercase; display: block; }
+        .value { font-size: 15px; font-weight: 600; color: #fff; }
 
-        .logout-btn { 
-            width: 100%; margin-top: 20px; background: none; border: 1px solid #444; 
-            color: #ff4444; padding: 12px; border-radius: 10px; cursor: pointer; 
-            font-weight: 600; transition: 0.3s;
-        }
-        .logout-btn:hover { background: rgba(255, 68, 68, 0.1); border-color: #ff4444; }
+        /* Order Styling */
+        .order-item { background: #0a0a0a; border: 1px solid #222; padding: 12px; border-radius: 10px; margin-bottom: 10px; position: relative; }
+        .order-status { position: absolute; right: 12px; top: 12px; font-size: 11px; padding: 3px 8px; border-radius: 5px; background: var(--gold); color: #000; font-weight: bold; }
+        .order-date { font-size: 11px; color: #666; }
+        .order-details { font-size: 13px; margin-top: 5px; color: #ccc; }
+
+        .logout-btn { width: 100%; background: none; border: 1px solid #333; color: #ff4444; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: 600; transition: 0.3s; }
+        #noOrders { text-align: center; color: #444; font-size: 14px; padding: 20px; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div id="verifyAlert">
-        <i class="fa fa-envelope-open-text"></i> ⚠️ Your email is not verified! 
-        <button onclick="window.resendEmail()">Verify Now</button>
+        ⚠️ Email not verified! <button onclick="window.resendEmail()">Verify Now</button>
     </div>
 
     <div class="info-card">
-        <h3><i class="fa fa-user-shield"></i> CUSTOMER PROFILE</h3>
-        
-        <div id="userData">
-            <div class="data-row">
-                <span class="label">Full Name</span>
-                <span class="value" id="viewName">Loading...</span>
-            </div>
-            <div class="data-row">
-                <span class="label">Phone Number</span>
-                <span class="value" id="viewPhone">Loading...</span>
-            </div>
-            <div class="data-row">
-                <span class="label">CNIC Number</span>
-                <span class="value" id="viewCnic">Loading...</span>
-            </div>
-            <div class="data-row">
-                <span class="label">Home Address</span>
-                <span class="value" id="viewAddress">Loading...</span>
-            </div>
-        </div>
-
-        <button class="logout-btn" onclick="window.handleLogout()">
-            <i class="fa fa-sign-out-alt"></i> Logout
-        </button>
+        <h3><i class="fa fa-user-circle"></i> Profile Details</h3>
+        <div class="data-row"><span class="label">Name</span><span class="value" id="viewName">---</span></div>
+        <div class="data-row"><span class="label">Phone</span><span class="value" id="viewPhone">---</span></div>
+        <div class="data-row"><span class="label">Address</span><span class="value" id="viewAddress">---</span></div>
     </div>
+
+    <div class="info-card">
+        <h3><i class="fa fa-box-open"></i> My Orders</h3>
+        <div id="orderList">
+            <div id="noOrders">No orders found yet.</div>
+        </div>
+    </div>
+
+    <button class="logout-btn" onclick="window.handleLogout()"><i class="fa fa-sign-out-alt"></i> Logout</button>
 </div>
 
 <script type="module">
@@ -93,4 +73,60 @@
         databaseURL: "https://web-app-4f3a1-default-rtdb.firebaseio.com",
         storageBucket: "web-app-4f3a1.firebasestorage.app",
         messagingSenderId: "222099203820",
-        appId: "1:222099203820:web:778
+        appId: "1:222099203820:web:778e204d2960181dfba7c9"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            // Email Status
+            document.getElementById('verifyAlert').style.display = user.emailVerified ? "none" : "block";
+
+            // Load Profile
+            onValue(ref(db, 'users/' + user.uid), (snap) => {
+                const data = snap.val();
+                if (data) {
+                    document.getElementById('viewName').innerText = data.name || "N/A";
+                    document.getElementById('viewPhone').innerText = data.phone || "N/A";
+                    document.getElementById('viewAddress').innerText = data.address || "N/A";
+                }
+            });
+
+            // Load Orders
+            onValue(ref(db, 'users/' + user.uid + '/orders'), (snap) => {
+                const orderList = document.getElementById('orderList');
+                if (snap.exists()) {
+                    orderList.innerHTML = "";
+                    snap.forEach(child => {
+                        const order = child.val();
+                        orderList.innerHTML += `
+                            <div class="order-item">
+                                <span class="order-status">${order.status || 'Pending'}</span>
+                                <div class="order-date">${order.date}</div>
+                                <div class="order-details">${order.items}</div>
+                                <div style="color:var(--gold); font-weight:bold; margin-top:5px;">${order.total}</div>
+                            </div>`;
+                    });
+                }
+            });
+        } else {
+            window.location.href = "login.html";
+        }
+    });
+
+    window.resendEmail = async () => {
+        try {
+            await sendEmailVerification(auth.currentUser);
+            alert("Verification link sent! Check your inbox.");
+        } catch (err) { alert(err.message); }
+    };
+
+    window.handleLogout = () => {
+        signOut(auth).then(() => { window.location.href = "login.html"; });
+    };
+</script>
+</body>
+</html>
