@@ -23,14 +23,14 @@
         
         .price-container { margin: 20px 0; display: flex; align-items: baseline; gap: 15px; }
         .price-now { font-size: 36px; font-weight: 800; color: var(--gold); }
-        .price-old { font-size: 18px; color: #555; text-decoration: line-through; }
 
-        .specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 25px 0; }
-        .spec-box { background: #1a1a1a; padding: 12px; border-radius: 12px; border: 1px solid #252525; }
-        .spec-label { font-size: 10px; color: #777; text-transform: uppercase; display: block; }
-        .spec-value { font-size: 14px; font-weight: 600; color: #fff; }
+        /* RoyalX Description Style */
+        .royal-description { background: #fff; color: #333; padding: 25px; border-radius: 15px; margin-top: 20px; }
+        .tabs-header { display: flex; gap: 20px; border-bottom: 1px solid #eee; margin-bottom: 20px; font-weight: bold; color: #888; }
+        .tab-active { color: #000; border-bottom: 2px solid #000; padding-bottom: 5px; cursor: pointer; }
+        .intro-blue { color: #0056b3; font-size: 16px; line-height: 1.6; margin: 0; }
 
-        .btn-whatsapp { display: flex; align-items: center; justify-content: center; gap: 10px; background: #25d366; color: #fff; text-decoration: none; padding: 18px; border-radius: 15px; font-weight: 800; font-size: 18px; margin-top: 20px; transition: 0.3s; box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2); }
+        .btn-whatsapp { display: flex; align-items: center; justify-content: center; gap: 10px; background: #25d366; color: #fff; text-decoration: none; padding: 18px; border-radius: 15px; font-weight: 800; font-size: 18px; margin-top: 25px; transition: 0.3s; box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2); }
         .btn-whatsapp:hover { transform: translateY(-3px); background: #1ebd5b; }
 
         /* --- Gallery Section --- */
@@ -39,7 +39,7 @@
         
         .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
         .product-card { background: var(--card); border: 1px solid #222; border-radius: 20px; padding: 15px; text-decoration: none; color: inherit; transition: 0.3s; text-align: center; }
-        .product-card:hover { border-color: var(--gold); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+        .product-card:hover { border-color: var(--gold); transform: translateY(-5px); }
         .product-card img { width: 100%; height: 180px; object-fit: contain; background: white; border-radius: 15px; margin-bottom: 15px; padding: 10px; }
         .product-card h3 { font-size: 15px; margin: 10px 0; color: #fff; }
         .product-card .p-price { color: var(--gold); font-weight: 800; font-size: 18px; }
@@ -59,8 +59,7 @@
     </div>
 
     <h2 class="gallery-title">More From Haider Mobiles</h2>
-    <div id="product-gallery" class="product-grid">
-        </div>
+    <div id="product-gallery" class="product-grid"></div>
 </div>
 
 <script type="module">
@@ -97,18 +96,20 @@
                             <h1>${p.name}</h1>
                             <div class="price-container">
                                 <span class="price-now">${p.price}</span>
-                                ${p.oldPrice ? `<span class="price-old">${p.oldPrice}</span>` : ''}
                             </div>
-                            <div class="specs-grid">
-                                <div class="spec-box"><span class="spec-label">Condition</span><span class="spec-value">10/10 New</span></div>
-                                <div class="spec-box"><span class="spec-label">Warranty</span><span class="spec-value">7 Days Check</span></div>
-                                <div class="spec-box"><span class="spec-label">Delivery</span><span class="spec-value">Nationwide</span></div>
-                                <div class="spec-box"><span class="spec-label">Payment</span><span class="spec-value">Cash on Delivery</span></div>
+
+                            <div class="royal-description">
+                                <div class="tabs-header">
+                                    <span class="tab-active">Description</span>
+                                    <span>Material</span>
+                                    <span>Reviews</span>
+                                </div>
+                                <div class="intro-blue">
+                                    <b style="font-size:18px;">Discover the Power of ${p.name}</b><br><br>
+                                    ${p.description ? p.description.replace(/\n/g, '<br>') : 'Premium Quality Product.'}
+                                </div>
                             </div>
-                            <div style="margin-bottom:20px;">
-                                <h4 style="color:var(--gold); margin-bottom:8px;">Description</h4>
-                                <p style="font-size:14px; color:#bbb; margin:0; line-height:1.6;">${p.description || 'Professional grade mobile accessory. Durable and high-performance guaranteed.'}</p>
-                            </div>
+
                             <a href="https://wa.me/923000000000?text=I want to buy: ${p.name}" class="btn-whatsapp">
                                 💬 ORDER ON WHATSAPP
                             </a>
