@@ -3,59 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Haider Mobiles | Premium Product</title>
+    <title>Haider Mobiles | Glassy Edition</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #d4af37; --bg: #080808; --card: #121212; --text: #e0e0e0; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; background: var(--bg); color: var(--text); }
+        :root { --gold: #d4af37; --bg: #080808; --card: rgba(255, 255, 255, 0.05); --border: rgba(212, 175, 55, 0.3); }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; background: var(--bg); color: #fff; }
         .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
 
-        /* --- Main Product Section --- */
-        .product-wrapper { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; background: var(--card); padding: 40px; border-radius: 30px; border: 1px solid #222; box-shadow: 0 20px 40px rgba(0,0,0,0.5); margin-top: 20px; }
-        
-        .img-section { position: sticky; top: 20px; background: #fff; border-radius: 20px; display: flex; align-items: center; justify-content: center; height: 450px; padding: 20px; }
-        .img-section img { max-width: 100%; max-height: 100%; object-fit: contain; transition: 0.3s; }
-        .img-section:hover img { transform: scale(1.05); }
+        /* --- Main Glassy Wrapper --- */
+        .product-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 20px; }
+        .img-section { background: #fff; border-radius: 30px; display: flex; align-items: center; justify-content: center; height: 500px; padding: 20px; }
+        .img-section img { max-width: 100%; max-height: 100%; object-fit: contain; }
 
-        .info-section { display: flex; flex-direction: column; }
-        .brand-badge { background: rgba(212, 175, 55, 0.1); color: var(--gold); padding: 6px 15px; border-radius: 50px; font-size: 11px; font-weight: 800; text-transform: uppercase; width: fit-content; margin-bottom: 15px; border: 1px solid var(--gold); }
-        h1 { font-size: 34px; font-weight: 800; margin: 0; color: #fff; letter-spacing: -0.5px; }
-        
-        .price-container { margin: 20px 0; display: flex; align-items: baseline; gap: 15px; }
-        .price-now { font-size: 36px; font-weight: 800; color: var(--gold); }
-
-        /* RoyalX Description Style */
-        .royal-description { background: #fff; color: #333; padding: 25px; border-radius: 15px; margin-top: 20px; }
-        .tabs-header { display: flex; gap: 20px; border-bottom: 1px solid #eee; margin-bottom: 20px; font-weight: bold; color: #888; }
-        .tab-active { color: #000; border-bottom: 2px solid #000; padding-bottom: 5px; cursor: pointer; }
-        .intro-blue { color: #0056b3; font-size: 16px; line-height: 1.6; margin: 0; }
-
-        .btn-whatsapp { display: flex; align-items: center; justify-content: center; gap: 10px; background: #25d366; color: #fff; text-decoration: none; padding: 18px; border-radius: 15px; font-weight: 800; font-size: 18px; margin-top: 25px; transition: 0.3s; box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2); }
-        .btn-whatsapp:hover { transform: translateY(-3px); background: #1ebd5b; }
-
-        /* --- Gallery Section --- */
-        .gallery-title { font-size: 26px; font-weight: 800; color: #fff; margin: 60px 0 30px; display: flex; align-items: center; gap: 15px; }
-        .gallery-title::after { content: ''; flex: 1; height: 1px; background: #222; }
-        
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
-        .product-card { background: var(--card); border: 1px solid #222; border-radius: 20px; padding: 15px; text-decoration: none; color: inherit; transition: 0.3s; text-align: center; }
-        .product-card:hover { border-color: var(--gold); transform: translateY(-5px); }
-        .product-card img { width: 100%; height: 180px; object-fit: contain; background: white; border-radius: 15px; margin-bottom: 15px; padding: 10px; }
-        .product-card h3 { font-size: 15px; margin: 10px 0; color: #fff; }
-        .product-card .p-price { color: var(--gold); font-weight: 800; font-size: 18px; }
-
-        @media (max-width: 900px) { 
-            .product-wrapper { grid-template-columns: 1fr; padding: 20px; }
-            .img-section { height: 300px; position: relative; }
-            .product-grid { grid-template-columns: 1fr 1fr; }
+        /* --- Glassy Description Section --- */
+        .glass-container { 
+            background: var(--card); 
+            backdrop-filter: blur(15px); 
+            -webkit-backdrop-filter: blur(15px); 
+            border: 1px solid var(--border); 
+            border-radius: 25px; 
+            padding: 30px; 
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
         }
+
+        .tabs-glass { display: flex; gap: 25px; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
+        .tab { padding: 10px 0; font-weight: 800; font-size: 14px; cursor: pointer; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+        .tab.active { color: var(--gold); border-bottom: 3px solid var(--gold); }
+
+        .gold-title { color: var(--gold); font-size: 20px; font-weight: 800; margin-bottom: 15px; display: block; }
+        .description-body { font-size: 15px; line-height: 1.8; color: #e0e0e0; }
+        .description-body b { color: var(--gold); }
+
+        .btn-whatsapp { 
+            display: flex; align-items: center; justify-content: center; gap: 10px; 
+            background: linear-gradient(45deg, #25d366, #128c7e); color: #fff; 
+            text-decoration: none; padding: 20px; border-radius: 18px; 
+            font-weight: 800; font-size: 18px; margin-top: 30px; 
+            transition: 0.3s; box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2); 
+        }
+
+        /* --- Gallery --- */
+        .gallery-title { font-size: 24px; color: var(--gold); margin: 60px 0 30px; font-weight: 800; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+        .product-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 15px; text-decoration: none; color: inherit; text-align: center; }
+        .product-card img { width: 100%; height: 180px; object-fit: contain; background: #fff; border-radius: 15px; padding: 10px; }
+
+        @media (max-width: 900px) { .product-wrapper { grid-template-columns: 1fr; } .img-section { height: 350px; } }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div id="main-content">
-        <div style="text-align:center; padding:100px; color:var(--gold);">⚡ Loading Premium Design...</div>
+        <div style="text-align:center; padding:100px; color:var(--gold);">✨ Crafting Glassy Look...</div>
     </div>
 
     <h2 class="gallery-title">More From Haider Mobiles</h2>
@@ -64,7 +64,7 @@
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getDatabase, ref, get, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyCYzkMGDwWZGx_PlrNfjloYZ6PVQRne9wg",
@@ -77,11 +77,8 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
+    const productId = new URLSearchParams(window.location.search).get('id');
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const productId = urlParams.get('id');
-
-    // 1. Fetch Selected Product
     if (productId) {
         onValue(ref(db, 'products/' + productId), (snapshot) => {
             const p = snapshot.val();
@@ -89,26 +86,22 @@
                 document.getElementById('main-content').innerHTML = `
                     <div class="product-wrapper">
                         <div class="img-section">
-                            <img src="${p.img}" alt="${p.name}">
+                            <img src="${p.img}">
                         </div>
-                        <div class="info-section">
-                            <span class="brand-badge">${p.brand || 'Official Stock'}</span>
-                            <h1>${p.name}</h1>
-                            <div class="price-container">
-                                <span class="price-now">${p.price}</span>
+                        <div class="glass-container">
+                            <div class="tabs-glass">
+                                <span class="tab active">Description</span>
+                                <span class="tab">Material</span>
+                                <span class="tab">Reviews</span>
+                            </div>
+                            
+                            <span class="gold-title">Discover the Power of ${p.name}</span>
+                            
+                            <div class="description-body">
+                                ${p.description.replace(/\n/g, '<br>')}
                             </div>
 
-                            <div class="royal-description">
-                                <div class="tabs-header">
-                                    <span class="tab-active">Description</span>
-                                    <span>Material</span>
-                                    <span>Reviews</span>
-                                </div>
-                                <div class="intro-blue">
-                                    <b style="font-size:18px;">Discover the Power of ${p.name}</b><br><br>
-                                    ${p.description ? p.description.replace(/\n/g, '<br>') : 'Premium Quality Product.'}
-                                </div>
-                            </div>
+                            <div style="margin-top:20px; font-size: 32px; font-weight:800; color:var(--gold);">${p.price}</div>
 
                             <a href="https://wa.me/923000000000?text=I want to buy: ${p.name}" class="btn-whatsapp">
                                 💬 ORDER ON WHATSAPP
@@ -119,7 +112,6 @@
         });
     }
 
-    // 2. Fetch Entire Gallery
     onValue(ref(db, 'products'), (snapshot) => {
         const gallery = document.getElementById('product-gallery');
         gallery.innerHTML = "";
@@ -129,8 +121,8 @@
                 gallery.innerHTML += `
                     <a href="product.html?id=${child.key}" class="product-card">
                         <img src="${p.img}">
-                        <h3>${p.name}</h3>
-                        <div class="p-price">${p.price}</div>
+                        <h3 style="color:#fff; font-size:14px;">${p.name}</h3>
+                        <div style="color:var(--gold); font-weight:bold;">${p.price}</div>
                     </a>`;
             }
         });
