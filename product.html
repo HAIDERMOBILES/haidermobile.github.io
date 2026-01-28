@@ -10,57 +10,61 @@
         body { font-family: 'Inter', sans-serif; margin: 0; background-color: var(--apple-black); color: #fff; -webkit-font-smoothing: antialiased; }
         .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
 
-        /* Loading Animation */
-        #loader { text-align: center; padding: 100px; color: var(--gold); font-weight: 600; }
+        /* Loader & Error Styling */
+        #loader { text-align: center; padding: 100px; color: var(--gold); font-size: 18px; font-weight: 600; }
+        .img-error { color: #ff4444; font-size: 12px; margin-top: 10px; display: none; }
 
         /* Header */
         .product-header { text-align: center; padding: 40px 0; }
         .brand-label { font-size: 11px; font-weight: 600; color: var(--gold); text-transform: uppercase; letter-spacing: 2px; }
-        h1 { font-size: clamp(24px, 5vw, 42px); margin: 10px 0; font-weight: 800; }
+        h1 { font-size: clamp(24px, 5vw, 42px); margin: 10px 0; font-weight: 800; color: #fff; }
 
         /* Layout */
         .apple-wrapper { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 50px; margin-bottom: 60px; }
 
-        /* Slider */
-        .slider-section { background: #0f0f0f; border-radius: 25px; padding: 30px; border: 1px solid #222; }
-        .main-img { height: 350px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
-        .main-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
-        .thumb-row { display: flex; justify-content: center; gap: 10px; }
-        .thumb-row img { width: 60px; height: 60px; background: #1a1a1a; border-radius: 10px; cursor: pointer; border: 2px solid transparent; padding: 5px; object-fit: contain; }
+        /* Slider Section with ImgBB Fix */
+        .slider-section { background: #0f0f0f; border-radius: 25px; padding: 30px; border: 1px solid #222; text-align: center; }
+        .main-img { height: 400px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; overflow: hidden; background: #000; border-radius: 15px; }
+        .main-img img { max-width: 100%; max-height: 100%; object-fit: contain; transition: 0.3s; }
+        
+        .thumb-row { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        .thumb-row img { width: 65px; height: 65px; background: #1a1a1a; border-radius: 10px; cursor: pointer; border: 2px solid transparent; padding: 5px; object-fit: contain; }
         .thumb-row img.active { border-color: var(--gold); }
 
-        /* Info */
-        .price-current { font-size: 32px; font-weight: 700; color: #fff; }
+        /* Price & Info */
+        .price-current { font-size: 36px; font-weight: 700; color: #fff; }
         .price-old { font-size: 20px; color: var(--text-dim); text-decoration: line-through; margin-left: 10px; }
-        .buy-btn { display: block; background: var(--apple-blue); color: #fff; text-align: center; text-decoration: none; padding: 18px; border-radius: 12px; font-weight: 600; margin-top: 30px; }
-        .main-desc { font-size: 16px; line-height: 1.6; color: #d2d2d7; margin-top: 20px; }
+        .buy-btn { display: block; background: var(--apple-blue); color: #fff; text-align: center; text-decoration: none; padding: 20px; border-radius: 14px; font-weight: 600; font-size: 18px; margin-top: 30px; transition: 0.3s; }
+        .buy-btn:hover { background: #0077ed; transform: scale(1.02); }
+        .main-desc { font-size: 16px; line-height: 1.6; color: #d2d2d7; margin-top: 25px; }
 
         /* Related Products */
         .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; padding-bottom: 80px; }
-        .apple-card { text-decoration: none; color: inherit; text-align: center; padding: 20px; background: #0f0f0f; border-radius: 20px; border: 1px solid #222; }
-        .apple-card img { width: 100%; height: 150px; object-fit: contain; margin-bottom: 10px; }
+        .apple-card { text-decoration: none; color: inherit; text-align: center; padding: 20px; background: #0f0f0f; border-radius: 20px; border: 1px solid #222; transition: 0.3s; }
+        .apple-card:hover { border-color: var(--gold); }
+        .apple-card img { width: 100%; height: 160px; object-fit: contain; margin-bottom: 10px; background: #000; border-radius: 10px; }
 
-        footer { background: #080808; padding: 60px 20px; border-top: 1px solid #222; font-size: 13px; color: var(--text-dim); }
+        footer { background: #050505; padding: 60px 20px; border-top: 1px solid #222; font-size: 13px; color: var(--text-dim); }
         .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; }
-        
-        @media (max-width: 600px) { h1 { font-size: 28px; } .main-img { height: 250px; } }
+
+        @media (max-width: 600px) { h1 { font-size: 28px; } .main-img { height: 300px; } }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div id="loader">✨ Loading Product...</div>
+    <div id="loader">✨ Loading Your Premium Gadget...</div>
     <div id="main-content" style="display: none;"></div>
 
-    <h2 style="color: var(--gold); margin: 60px 0 30px;">Related Products</h2>
+    <h2 style="color: var(--gold); margin: 80px 0 30px; border-left: 4px solid var(--gold); padding-left: 15px;">Related Products</h2>
     <div id="product-gallery" class="product-grid"></div>
 </div>
 
 <footer>
     <div class="container footer-grid">
-        <div><h4>Haider Mobiles</h4><p>Premium Quality Gadgets.</p></div>
-        <div><h4>Contact</h4><p>+92 300 0000000<br>support@haidermobiles.com</p></div>
-        <div><h4>Visit</h4><p>Hall Road, Lahore.<br>11 AM - 10 PM</p></div>
+        <div><h4>HAIDER MOBILES</h4><p>Premium Quality Gadgets & Accessories.</p></div>
+        <div><h4>Quick Contact</h4><p>📞 +92 300 0000000<br>✉️ support@haidermobiles.com</p></div>
+        <div><h4>Our Store</h4><p>📍 Shop #45, Grand Plaza, Hall Road, Lahore.</p></div>
     </div>
 </footer>
 
@@ -79,32 +83,32 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
-    const urlParams = new URLSearchParams(window.location.search);
-    const productId = urlParams.get('id');
+    const productId = new URLSearchParams(window.location.search).get('id');
 
-    if (!productId) {
-        document.getElementById('loader').innerHTML = "❌ No Product Found in URL!";
-    } else {
-        const productRef = ref(db, 'products/' + productId);
-        onValue(productRef, (snapshot) => {
+    if (productId) {
+        onValue(ref(db, 'products/' + productId), (snapshot) => {
             const p = snapshot.val();
             if (p) {
                 document.getElementById('loader').style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
+
+                // ImgBB Array Handling
+                const images = [p.img, p.img2, p.img3].filter(u => u && u.trim() !== "");
                 
-                const images = [p.img, p.img2, p.img3].filter(u => u && u !== "");
                 let thumbs = images.length > 1 ? images.map((u, i) => 
-                    `<img src="${u}" onclick="document.getElementById('mImg').src='${u}'; document.querySelectorAll('.thumb-row img').forEach(img=>img.classList.remove('active')); this.classList.add('active')" class="${i===0?'active':''}">`
+                    `<img src="${u}" onerror="this.src='https://via.placeholder.com/100?text=Error'" onclick="document.getElementById('mImg').src='${u}'; document.querySelectorAll('.thumb-row img').forEach(img=>img.classList.remove('active')); this.classList.add('active')" class="${i===0?'active':''}">`
                 ).join('') : '';
 
                 document.getElementById('main-content').innerHTML = `
                     <div class="product-header">
-                        <span class="brand-label">Premium Gadget</span>
+                        <span class="brand-label">Official Store</span>
                         <h1>${p.name}</h1>
                     </div>
                     <div class="apple-wrapper">
                         <div class="slider-section">
-                            <div class="main-img"><img id="mImg" src="${images[0]}"></div>
+                            <div class="main-img">
+                                <img id="mImg" src="${images[0]}" onerror="this.parentElement.innerHTML='<p style=color:red>Image Link Error (Check ImgBB Link)</p>'">
+                            </div>
                             <div class="thumb-row">${thumbs}</div>
                         </div>
                         <div class="info-section">
@@ -112,20 +116,19 @@
                                 <span class="price-current">${p.price}</span>
                                 ${p.oldPrice ? `<span class="price-old">${p.oldPrice}</span>` : ''}
                             </div>
-                            <div style="color:var(--apple-blue); font-weight:600; margin-bottom:15px;">Official RoyalX Product</div>
-                            <div class="main-desc">${p.description ? p.description.replace(/\n/g, '<br>') : 'No description available.'}</div>
-                            <a href="https://wa.me/923279518790?text=I want to buy: ${p.name}" class="buy-btn">Order via WhatsApp</a>
+                            <div style="color:var(--gold); font-weight:600; margin-bottom:15px; font-size:14px;">⭐⭐⭐⭐⭐ High Rated Gadget</div>
+                            <div class="main-desc">${p.description ? p.description.replace(/\n/g, '<br>') : 'Details coming soon...'}</div>
+                            <a href="https://wa.me/923279518790?text=I want to buy: ${p.name}" class="buy-btn">Order on WhatsApp</a>
+                            <p style="text-align:center; color:var(--text-dim); font-size:12px; margin-top:15px;">Fast Delivery All Over Pakistan 🇵🇰</p>
                         </div>
                     </div>`;
             } else {
-                document.getElementById('loader').innerHTML = "❌ Product data not found in Database.";
+                document.getElementById('loader').innerHTML = "❌ Product Not Found.";
             }
-        }, (error) => {
-            document.getElementById('loader').innerHTML = "❌ Error: " + error.message;
         });
     }
 
-    // Related Products Load
+    // Related Gallery
     onValue(ref(db, 'products'), (snapshot) => {
         const gallery = document.getElementById('product-gallery');
         gallery.innerHTML = "";
@@ -134,7 +137,7 @@
             if (child.key !== productId) {
                 gallery.innerHTML += `
                     <a href="product.html?id=${child.key}" class="apple-card">
-                        <img src="${p.img}">
+                        <img src="${p.img}" onerror="this.src='https://via.placeholder.com/200?text=Image+Error'">
                         <h4 style="margin:5px 0; color:#fff; font-size:14px;">${p.name}</h4>
                         <div style="color:var(--gold); font-size:14px; font-weight:bold;">${p.price}</div>
                     </a>`;
