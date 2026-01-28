@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account | Haider Mobiles</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root { --apple-black: #000000; --apple-blue: #0066cc; --gold: #d4af37; --card-bg: #1c1c1e; }
+        body { font-family: 'Inter', sans-serif; background: var(--apple-black); color: #fff; margin: 0; padding-top: 60px; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        
+        .profile-card { background: var(--card-bg); padding: 30px; border-radius: 20px; border: 1px solid #333; text-align: center; }
+        .user-icon { font-size: 60px; color: var(--gold); margin-bottom: 15px; }
+        
+        .info-group { text-align: left; margin-top: 25px; }
+        label { color: #86868b; font-size: 12px; display: block; margin-bottom: 5px; text-transform: uppercase; }
+        input { width: 100%; background: #2c2c2e; border: 1px solid #3a3a3c; padding: 12px; border-radius: 10px; color: #fff; margin-bottom: 15px; outline: none; box-sizing: border-box; }
+        
+        .update-btn { width: 100%; background: var(--apple-blue); color: #fff; border: none; padding: 15px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: 0.3s; }
+        .update-btn:hover { background: #0077ed; }
+        
+        .logout-btn { background: none; border: 1px solid #ff4444; color: #ff4444; margin-top: 15px; width: 100%; padding: 12px; border-radius: 12px; cursor: pointer; }
+        
+        nav { position: fixed; top: 0; left: 0; width: 100%; height: 50px; background: rgba(0,0,0,0.8); backdrop-filter: blur(15px); z-index: 1000; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #222; }
+    </style>
+</head>
+<body>
+
+<nav><a href="index.html" style="color:#fff; text-decoration:none; font-weight:800;">HAIDER MOBILES</a></nav>
+
+<div class="container">
+    <div class="profile-card">
+        <i class="fa-solid fa-circle-user user-icon"></i>
+        <h2 id="welcomeText">Welcome!</h2>
+        <p id="userEmail" style="color: #86868b; font-size: 14px; margin-bottom: 30px;"></p>
+
+        <div class="info-group">
+            <label>Full Name</label>
+            <input type="text" id="userName" placeholder="Loading...">
+
+            <label>Mobile Number</label>
+            <input type="text" id="userPhone" placeholder="Not set">
+
+            <label>New Password (Optional)</label>
+            <input type="password" id="newPassword" placeholder="Enter new password to change">
+        </div>
+
+        <button class="update-btn" onclick="updateProfile()">Update Profile</button>
+        <button class="logout-btn" onclick="logout()">Sign Out</button>
+    </div>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, updateProfile as updateAuthProfile, updatePassword, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCYzkMGDwWZGx_PlrNfjloYZ6PVQRne9wg",
+        authDomain: "web-app-4f3a1.firebaseapp.com",
+        projectId: "web-app-4f3a1",
+        databaseURL: "https://web-app-4f3a1-default-rtdb.firebaseio.com",
+        storageBucket: "web-app-4f3a1.firebasestorage.app",
+        messagingSenderId: "222099203820",
+        appId: "1:222099203820:web:778e204d2960181dfba7c9"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+
+    // Check if user is logged in
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            document.getElementById('userEmail').innerText = user.email;
+            
+            // Database se user ki extra details (phone wagera) uthana
+            onValue(ref(db, 'users/' + user.uid), (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    document.getElementById('userName').value = data.name || user.displayName || "";
+                    document.getElementById('userPhone').value = data.phone || "";
+                    document.getElementById('welcomeText').innerText = "Hi, " + (data.name || "User");
+                }
+            });
+        } else {
+            // Agar login nahi hai toh login page par bhej do
+            window.location.href = "login.html";
+        }
+    });
+
+    // Logout Function
+    window.logout = () => {
+        signOut(auth).then(() => {
+            window.location.href = "login.html";
+        });
+    };
+
+    // Update Profile Function
+    window.updateProfile = async () => {
+        const user = auth.currentUser;
+        const newName = document.getElementById('userName').value;
+        const newPhone = document.getElementById('userPhone').value;
+        const newPass = document.getElementById('newPassword').value;
+
+        try {
+            // 1. Update Realtime Database
+            await update(ref(db, 'users/' + user.uid), {
+                name: newName,
+                phone: newPhone
+            });
+
+            // 2. Update Firebase Auth Name
+            await updateAuthProfile(user, { displayName: newName });
+
+            // 3. Update Password if entered
+            if (newPass.length >= 6) {
+                await updatePassword(user, newPass);
+                alert("Profile and Password Updated!");
+            } else if (newPass.length > 0) {
+                alert("Password must be at least 6 characters.");
+            } else {
+                alert("Profile Updated Successfully!");
+            }
+
+        } catch (error) {
+            alert("Error updating: " + error.message);
+        }
+    };
+</script>
+</body>
+</html>
