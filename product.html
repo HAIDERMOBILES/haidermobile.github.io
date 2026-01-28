@@ -4,69 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Details | Haider Mobiles</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #d4af37; --red: #e44d26; --bg: #f8f9fa; }
+        :root { --gold: #d4af37; --bg: #fdfdfd; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; background: var(--bg); color: #222; }
-        
-        .container { max-width: 1200px; margin: 20px auto; padding: 20px; }
-        .product-main { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; background: #fff; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .container { max-width: 1100px; margin: 20px auto; padding: 15px; }
+        .main-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; background: white; padding: 25px; border-radius: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
 
-        /* Left: Images Section */
-        .image-gallery { position: sticky; top: 100px; }
-        .main-img-container { width: 100%; height: 450px; background: #fff; border: 1px solid #eee; border-radius: 15px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        .main-img-container img { max-width: 90%; max-height: 90%; object-fit: contain; transition: 0.3s; }
-        
-        .thumbnail-row { display: flex; gap: 10px; margin-top: 15px; justify-content: center; }
-        .thumb { width: 70px; height: 70px; border: 2px solid #eee; border-radius: 8px; cursor: pointer; padding: 5px; background: #fff; object-fit: contain; }
-        .thumb:hover, .thumb.active { border-color: var(--gold); }
+        /* Left side: Images */
+        .image-box { position: sticky; top: 20px; text-align: center; }
+        .main-img { width: 100%; max-height: 450px; object-fit: contain; border: 1px solid #eee; border-radius: 15px; padding: 10px; }
+        .thumb-row { display: flex; gap: 10px; margin-top: 15px; justify-content: center; }
+        .thumb { width: 60px; height: 60px; border: 2px solid #eee; border-radius: 8px; cursor: pointer; object-fit: contain; background: white; padding: 5px; }
+        .thumb.active { border-color: var(--gold); }
 
-        /* Right: Info Section */
-        .info-section { padding-left: 20px; }
-        .brand-badge { background: #fff5d7; color: #94761d; padding: 5px 15px; border-radius: 50px; font-size: 12px; font-weight: 800; }
-        h1 { font-size: 32px; margin: 15px 0 10px; font-weight: 800; color: #111; }
-        
-        .price-area { margin: 20px 0; }
-        .current-price { font-size: 30px; font-weight: 800; color: #000; }
-        .old-price { font-size: 18px; text-decoration: line-through; color: #888; margin-left: 10px; }
-        .discount-tag { background: var(--red); color: #fff; padding: 3px 10px; border-radius: 5px; font-size: 14px; margin-left: 10px; }
+        /* Right side: Info */
+        .info-box { padding: 10px; }
+        .badge { background: #fef4d1; color: #8a6d1c; padding: 5px 12px; border-radius: 50px; font-size: 12px; font-weight: 800; text-transform: uppercase; }
+        h1 { font-size: 32px; margin: 15px 0 5px; color: #111; }
+        .price-tag { display: flex; align-items: center; gap: 15px; margin: 20px 0; }
+        .now { font-size: 28px; font-weight: 800; color: #000; }
+        .old { font-size: 18px; text-decoration: line-through; color: #999; }
+        .disc { background: #e44d26; color: white; padding: 4px 10px; border-radius: 6px; font-size: 14px; font-weight: bold; }
 
-        .company-box { background: #fdfdfd; border: 1px solid #eee; padding: 20px; border-radius: 12px; margin: 25px 0; }
-        .company-box h4 { margin: 0 0 10px; color: var(--gold); }
-        .company-box p { font-size: 14px; color: #666; margin: 0; line-height: 1.6; }
+        .company-detail { background: #fafafa; border: 1px solid #eee; padding: 15px; border-radius: 12px; margin: 25px 0; }
+        .company-detail h4 { margin: 0 0 10px; color: var(--gold); }
+        .company-detail p { font-size: 14px; color: #555; line-height: 1.6; margin: 0; }
 
-        .buy-btn { display: block; background: #25d366; color: white; text-align: center; padding: 18px; border-radius: 12px; text-decoration: none; font-weight: 700; font-size: 18px; margin-top: 20px; transition: 0.3s; box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2); }
-        .buy-btn:hover { transform: translateY(-3px); background: #1ebd5b; }
+        .buy-now { display: block; background: #25d366; color: white; text-align: center; padding: 18px; border-radius: 12px; text-decoration: none; font-weight: 800; font-size: 18px; box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2); transition: 0.3s; }
+        .buy-now:hover { transform: translateY(-3px); background: #1ebd5b; }
 
-        /* Related Products Section */
-        .related-title { margin: 50px 0 20px; font-size: 24px; font-weight: 800; }
-        .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
-        .rel-card { background: #fff; padding: 15px; border-radius: 15px; border: 1px solid #eee; text-align: center; text-decoration: none; color: inherit; transition: 0.3s; }
-        .rel-card:hover { transform: translateY(-5px); border-color: var(--gold); }
-        .rel-card img { width: 100%; height: 150px; object-fit: contain; margin-bottom: 10px; }
-        .rel-card h4 { margin: 5px 0; font-size: 14px; }
-
-        @media (max-width: 900px) {
-            .product-main { grid-template-columns: 1fr; }
-            .info-section { padding-left: 0; }
-        }
+        @media (max-width: 800px) { .main-grid { grid-template-columns: 1fr; } .image-box { position: relative; top: 0; } }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="product-main" id="product-data">
-        <p style="text-align:center; padding:50px;">Loading product details...</p>
-    </div>
-
-    <h3 class="related-title">People also viewed</h3>
-    <div class="related-grid" id="related-products">
-        </div>
+<div class="container" id="content">
+    <p style="text-align:center; padding:100px;">Fetching Product Data...</p>
 </div>
 
 <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, get, query, limitToLast } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyCYzkMGDwWZGx_PlrNfjloYZ6PVQRne9wg",
@@ -84,84 +63,51 @@
     const productId = urlParams.get('id');
 
     if (productId) {
-        // Fetch Main Product
         get(ref(db, `products/${productId}`)).then((snapshot) => {
             if (snapshot.exists()) {
                 const p = snapshot.val();
-                
-                // Demo ke liye discount calculation (Agar data mein nahi hai toh 10% auto)
-                const priceNum = parseInt(p.price.replace(/\D/g,''));
-                const oldPrice = Math.floor(priceNum * 1.15); // 15% extra for old price
-                
-                document.getElementById('product-data').innerHTML = `
-                    <div class="image-gallery">
-                        <div class="main-img-container">
-                            <img src="${p.img}" id="mainView">
+                document.getElementById('content').innerHTML = `
+                    <div class="main-grid">
+                        <div class="image-box">
+                            <img src="${p.img}" class="main-img" id="mainImg">
+                            <div class="thumb-row">
+                                <img src="${p.img}" class="thumb active" onclick="updateImg('${p.img}', this)">
+                                ${p.img2 ? `<img src="${p.img2}" class="thumb" onclick="updateImg('${p.img2}', this)">` : ''}
+                            </div>
                         </div>
-                        <div class="thumbnail-row">
-                            <img src="${p.img}" class="thumb active" onclick="changeImg('${p.img}', this)">
-                            <img src="${p.img}" class="thumb" style="filter: hue-rotate(90deg);" onclick="changeImg(this.src, this)">
-                            <img src="${p.img}" class="thumb" style="filter: grayscale(1);" onclick="changeImg(this.src, this)">
-                        </div>
-                    </div>
-                    <div class="info-section">
-                        <span class="brand-badge">${p.brand} Official</span>
-                        <h1>${p.name}</h1>
-                        <div class="price-area">
-                            <span class="current-price">${p.price}</span>
-                            <span class="old-price">Rs. ${oldPrice.toLocaleString()}</span>
-                            <span class="discount-tag">Save 15%</span>
-                        </div>
-                        
-                        <div class="company-box">
-                            <h4>About ${p.brand}</h4>
-                            <p>${p.brand} is known for its cutting-edge technology and premium build quality. This device is PTA approved and comes with an official brand warranty of 12 months.</p>
-                        </div>
+                        <div class="info-box">
+                            <span class="badge">${p.brand || 'Original'}</span>
+                            <h1>${p.name}</h1>
+                            <div class="price-tag">
+                                <span class="now">${p.price}</span>
+                                ${p.oldPrice ? `<span class="old">${p.oldPrice}</span>` : ''}
+                                ${p.oldPrice ? `<span class="disc">OFF</span>` : ''}
+                            </div>
+                            
+                            <div class="company-detail">
+                                <h4>Product Overview</h4>
+                                <p>${p.description || "Premium quality product available at Haider Mobiles. Trusted by thousands for authentic accessories and devices."}</p>
+                            </div>
 
-                        <div style="margin:20px 0; font-size:14px; color:#555;">
-                            <b>✓</b> FREE Home Delivery <br>
-                            <b>✓</b> 7 Days Replacement Policy <br>
-                            <b>✓</b> Cash on Delivery Available
-                        </div>
+                            <ul style="font-size:14px; color:#666; padding-left:20px;">
+                                <li>Official Brand Warranty</li>
+                                <li>PTA Approved (For Mobiles)</li>
+                                <li>Fast Delivery across Pakistan</li>
+                            </ul>
 
-                        <a href="https://wa.me/923000000000?text=I want to buy ${p.name}" class="buy-btn">ORDER VIA WHATSAPP</a>
+                            <a href="https://wa.me/923000000000?text=I want to buy: ${p.name}" class="buy-now">ORDER ON WHATSAPP</a>
+                        </div>
                     </div>
                 `;
-
-                loadRelated(p.brand);
             }
         });
     }
 
-    // Function to change main image
-    window.changeImg = (src, el) => {
-        document.getElementById('mainView').src = src;
+    window.updateImg = (src, el) => {
+        document.getElementById('mainImg').src = src;
         document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
         el.classList.add('active');
     };
-
-    // Load Related Products
-    function loadRelated(currentBrand) {
-        get(ref(db, 'products')).then((snapshot) => {
-            const data = snapshot.val();
-            const list = Object.entries(data).filter(([id, p]) => p.brand === currentBrand && id !== productId).slice(0, 4);
-            const container = document.getElementById('related-products');
-            
-            if(list.length === 0) {
-                container.innerHTML = "<p>No related products found.</p>";
-                return;
-            }
-
-            container.innerHTML = list.map(([id, p]) => `
-                <a href="product.html?id=${id}" class="rel-card">
-                    <img src="${p.img}">
-                    <h4>${p.name}</h4>
-                    <span style="color:var(--gold); font-weight:bold;">${p.price}</span>
-                </a>
-            `).join('');
-        });
-    }
 </script>
-
 </body>
 </html>
