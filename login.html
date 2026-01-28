@@ -11,7 +11,7 @@
         h2 { color: #d4af37; margin-bottom: 20px; }
         input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; border: 1px solid #333; background: #000; color: #fff; box-sizing: border-box; }
         .btn { width: 100%; padding: 12px; background: #0066cc; border: none; color: #fff; border-radius: 10px; font-weight: 600; cursor: pointer; margin-top: 10px; }
-        .btn-alt { background: none; border: 1px solid #444; margin-top: 15px; }
+        .btn-alt { background: none; border: 1px solid #444; margin-top: 15px; color: #888; font-size: 14px; cursor: pointer; }
         .error-msg { color: #ff4444; font-size: 13px; margin-top: 10px; display: none; }
     </style>
 </head>
@@ -22,12 +22,11 @@
     <div id="errorBox" class="error-msg"></div>
     
     <input type="text" id="userName" placeholder="Full Name" style="display: none;">
-    
     <input type="email" id="userEmail" placeholder="Email Address">
     <input type="password" id="userPass" placeholder="Password (Min 6 chars)">
     
     <button class="btn" id="mainBtn">Login</button>
-    <button class="btn btn-alt" id="toggleBtn">Create New Account</button>
+    <div class="btn-alt" id="toggleBtn">Create New Account</div>
 </div>
 
 <script type="module">
@@ -56,14 +55,31 @@
     const toggleBtn = document.getElementById('toggleBtn');
     const errorBox = document.getElementById('errorBox');
 
-    // Toggle between Login and Register
+    // --- SMART LOGIC: Check if URL says "signup" ---
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('action') === 'signup') {
+        setSignupMode();
+    }
+
+    function setSignupMode() {
+        isLogin = false;
+        title.innerText = "Register";
+        mainBtn.innerText = "Sign Up";
+        toggleBtn.innerText = "Already have an account? Login";
+        nameInput.style.display = "block";
+    }
+
+    function setLoginMode() {
+        isLogin = true;
+        title.innerText = "Login";
+        mainBtn.innerText = "Login";
+        toggleBtn.innerText = "Create New Account";
+        nameInput.style.display = "none";
+    }
+
     toggleBtn.onclick = () => {
-        isLogin = !isLogin;
-        title.innerText = isLogin ? "Login" : "Register";
-        mainBtn.innerText = isLogin ? "Login" : "Sign Up";
-        toggleBtn.innerText = isLogin ? "Create New Account" : "Already have an account? Login";
-        nameInput.style.display = isLogin ? "none" : "block";
-        errorBox.style.display = "none";
+        if (isLogin) setSignupMode();
+        else setLoginMode();
     };
 
     mainBtn.onclick = async () => {
@@ -72,15 +88,14 @@
         const name = nameInput.value;
 
         errorBox.style.display = "none";
+        if(!email || !pass) { alert("Please fill all fields"); return; }
 
         try {
             if (isLogin) {
-                // LOGIN LOGIC
                 await signInWithEmailAndPassword(auth, email, pass);
                 alert("Welcome back!");
                 window.location.href = "index.html";
             } else {
-                // REGISTER LOGIC
                 const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
                 await updateProfile(userCredential.user, { displayName: name });
                 alert("Account Created!");
@@ -88,11 +103,7 @@
             }
         } catch (error) {
             errorBox.style.display = "block";
-            if(error.code === "auth/configuration-not-found") {
-                errorBox.innerText = "Error: Please enable Email/Password in Firebase Console!";
-            } else {
-                errorBox.innerText = error.message;
-            }
+            errorBox.innerText = error.message;
         }
     };
 </script>
