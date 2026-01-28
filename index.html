@@ -3,104 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Haider Mobiles | Home</title>
+    <title>Haider Mobiles | Luxury Experience</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #d4af37; --bg: #000; --card: #111; }
-        body { background: var(--bg); color: #fff; font-family: 'Poppins', sans-serif; margin: 0; }
-        
-        /* Header & Navigation */
-        nav { display: flex; justify-content: space-between; padding: 20px; background: #0a0a0a; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 1000; }
-        .logo { color: var(--gold); font-weight: 800; font-size: 22px; text-decoration: none; }
-        
-        /* Product Grid */
-        .container { max-width: 1200px; margin: 30px auto; padding: 0 15px; }
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; }
-        
-        .product-card { background: var(--card); border-radius: 15px; padding: 15px; border: 1px solid #222; transition: 0.3s; text-align: center; }
-        .product-card:hover { border-color: var(--gold); transform: translateY(-5px); }
-        .product-card img { width: 100%; height: 200px; object-fit: contain; border-radius: 10px; margin-bottom: 15px; }
-        .product-card h3 { font-size: 18px; margin: 10px 0; color: #fff; }
-        .product-card .price { color: var(--gold); font-weight: 700; font-size: 20px; margin-bottom: 15px; }
-        
-        .buy-btn { width: 100%; background: var(--gold); color: #000; border: none; padding: 12px; border-radius: 8px; font-weight: 800; cursor: pointer; transition: 0.3s; }
-        .buy-btn:hover { background: #fff; }
+        :root { 
+            --gold: #d4af37; 
+            --bg-color: #050505;
+        }
 
-        #loading { text-align: center; font-size: 20px; color: var(--gold); padding: 50px; }
+        body { 
+            background-color: var(--bg-color); 
+            color: #fff; 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            margin: 0;
+            transition: background 0.8s ease; /* Scroll color change transition */
+            overflow-x: hidden;
+        }
+
+        /* Modern Nav */
+        nav { 
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 5%; background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255,255,255,0.1);
+            position: sticky; top: 0; z-index: 1000;
+        }
+
+        /* Lighting Card Design */
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 40px; }
+
+        .product-card { 
+            background: #111; 
+            border-radius: 24px; padding: 25px;
+            position: relative; 
+            overflow: visible; /* Lighting ke liye zaroori hai */
+            transition: transform 0.4s ease;
+        }
+
+        /* Side Lighting Effect */
+        .product-card::before {
+            content: "";
+            position: absolute;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            background: linear-gradient(45deg, transparent, var(--gold), transparent, var(--gold));
+            background-size: 400%;
+            z-index: -1;
+            border-radius: 26px;
+            opacity: 0;
+            transition: 0.5s;
+            filter: blur(10px);
+        }
+
+        .product-card:hover::before {
+            opacity: 1;
+            animation: move-light 3s linear infinite;
+        }
+
+        @keyframes move-light {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .product-card:hover { transform: scale(1.03); }
+
+        .product-card img { width: 100%; height: 250px; object-fit: contain; margin-bottom: 20px; }
+        .price { font-size: 24px; font-weight: 800; color: var(--gold); }
+
+        .buy-btn {
+            background: var(--gold); color: #000; border: none;
+            padding: 12px 20px; border-radius: 12px; font-weight: bold;
+            cursor: pointer; width: 100%; margin-top: 15px;
+        }
+
     </style>
 </head>
-<body>
+<body id="mainBody">
 
 <nav>
-    <a href="index.html" class="logo">HAIDER MOBILES</a>
-    <div class="nav-links">
-        <a href="dashboard.html" style="color:#fff; text-decoration:none; margin-right:20px;"><i class="fa fa-user"></i> Profile</a>
-        <a href="cart.html" style="color:var(--gold); text-decoration:none;"><i class="fa fa-shopping-cart"></i> Cart</a>
-    </div>
+    <a href="#" style="color:var(--gold); font-weight:800; text-decoration:none; fontSize:24px;">HAIDER MOBILES</a>
 </nav>
 
 <div class="container">
-    <h2 style="text-align: center; margin-bottom: 40px; letter-spacing: 2px;">LATEST SMARTPHONES</h2>
-    
-    <div id="loading">Loading Mobiles...</div>
-    <div class="product-grid" id="productDisplay"></div>
+    <div class="product-grid" id="productDisplay">
+        </div>
 </div>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyCYzkMGDwWZGx_PlrNfjloYZ6PVQRne9wg",
-        authDomain: "web-app-4f3a1.firebaseapp.com",
-        projectId: "web-app-4f3a1",
-        databaseURL: "https://web-app-4f3a1-default-rtdb.firebaseio.com",
-        storageBucket: "web-app-4f3a1.firebasestorage.app",
-        messagingSenderId: "222099203820",
-        appId: "1:222099203820:web:778e204d2960181dfba7c9"
-    };
-
+    const firebaseConfig = { /* Aapki Config */ };
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    // Dynamic Product Loading Logic
-    const productDisplay = document.getElementById('productDisplay');
-    const loadingDiv = document.getElementById('loading');
+    // Background Scroll Change Logic
+    window.onscroll = () => {
+        const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+        const body = document.getElementById('mainBody');
+        
+        if (scrollPercent < 25) body.style.backgroundColor = "#050505"; // Black
+        else if (scrollPercent < 50) body.style.backgroundColor = "#0a0d14"; // Dark Blue
+        else if (scrollPercent < 75) body.style.backgroundColor = "#120a0a"; // Dark Maroon
+        else body.style.backgroundColor = "#0d120a"; // Dark Forest Green
+    };
 
     onValue(ref(db, 'products'), (snapshot) => {
-        productDisplay.innerHTML = "";
-        loadingDiv.style.display = "none";
-        
-        if (snapshot.exists()) {
-            snapshot.forEach((childSnapshot) => {
-                const product = childSnapshot.val();
-                const productId = childSnapshot.key;
-                
-                productDisplay.innerHTML += `
-                    <div class="product-card">
-                        <img src="${product.img}" alt="${product.name}">
-                        <h3>${product.name}</h3>
-                        <p class="price">${product.price}</p>
-                        <button class="buy-btn" onclick="addToCart('${productId}', '${product.name}', '${product.price}', '${product.img}')">
-                            <i class="fa fa-cart-plus"></i> ADD TO CART
-                        </button>
-                    </div>
-                `;
-            });
-        } else {
-            loadingDiv.innerText = "No products available yet!";
-            loadingDiv.style.display = "block";
-        }
+        const display = document.getElementById('productDisplay');
+        display.innerHTML = "";
+        snapshot.forEach(child => {
+            const p = child.val();
+            display.innerHTML += `
+                <div class="product-card">
+                    <img src="${p.img}" alt="${p.name}">
+                    <h3>${p.name}</h3>
+                    <div class="price">${p.price}</div>
+                    <button class="buy-btn" onclick="addToCart('${p.name}')">ADD TO CART</button>
+                </div>`;
+        });
     });
-
-    // Simple Cart Logic (Example)
-    window.addToCart = (id, name, price, img) => {
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        cart.push({ id, name, price, img });
-        localStorage.setItem('cart', JSON.stringify(cart));
-        alert(name + " added to cart!");
-    };
 </script>
-
 </body>
 </html>
