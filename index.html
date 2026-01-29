@@ -15,9 +15,9 @@
     --gold: #d4af37; 
     --gold-bright: #ffdf00;
     --bg: #000000; 
-    --card-bg: #0a0a0a; 
-    --glass: rgba(255, 255, 255, 0.03);
-    --border: rgba(212, 175, 55, 0.15); 
+    --card-bg: rgba(20, 20, 20, 0.6); 
+    --glass: rgba(255, 255, 255, 0.05);
+    --border: rgba(212, 175, 55, 0.2); 
     --apple-blue: #0066cc;
 }
 
@@ -25,82 +25,64 @@
 
 body { 
     margin: 0; background: var(--bg); color: #fff; font-family: 'Poppins', sans-serif; 
-    overflow-x: hidden; padding-top: 70px; transition: background 1.2s ease; 
+    overflow-x: hidden; padding-top: 70px;
 }
 
 /* --- NAVBAR --- */
 .top-header { 
     position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; 
-    background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(20px); 
+    background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(20px); 
     border-bottom: 1px solid var(--border); padding: 10px 5%;
 }
 .header-main { display: flex; justify-content: space-between; align-items: center; max-width: 1400px; margin: 0 auto; }
-.store-name { font-weight: 800; color: var(--gold); font-size: 1.4rem; text-decoration: none; letter-spacing: 1px; }
+.store-name { font-weight: 800; color: var(--gold); font-size: 1.6rem; text-decoration: none; letter-spacing: 2px; }
 
+/* --- SEARCH --- */
 .search-container { position: relative; width: 35%; }
 .search-box { 
-    width: 100%; background: var(--glass); border: 1px solid #222; color: #fff; 
-    padding: 8px 15px 8px 35px; border-radius: 20px; outline: none; font-size: 13px;
+    width: 100%; background: var(--glass); border: 1px solid #333; color: #fff; 
+    padding: 10px 15px 10px 40px; border-radius: 30px; outline: none; font-size: 13px;
 }
-.search-container i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #666; font-size: 12px; }
+.search-container i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--gold); font-size: 14px; }
 
-/* --- TOOLS --- */
-.nav-tools { display: flex; align-items: center; gap: 20px; }
-.nav-icons { display: flex; gap: 18px; font-size: 18px; align-items: center; }
-.nav-icons i { cursor: pointer; color: #f5f5f7; }
-.nav-icons i:hover { color: var(--gold); }
+/* --- DUAL CHIP BARS --- */
+.section-label { padding: 15px 5% 0; font-size: 12px; color: var(--gold); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+.brand-nav { display: flex; gap: 10px; overflow-x: auto; padding: 10px 5%; scrollbar-width: none; }
+.brand-nav::-webkit-scrollbar { display: none; }
+.brand-chip { padding: 8px 22px; background: var(--glass); border: 1px solid #222; border-radius: 50px; font-size: 12px; cursor: pointer; color: #aaa; white-space: nowrap; }
+.brand-chip.active { color: #000; background: var(--gold); border-color: var(--gold); font-weight: 600; }
 
-.cart-icon-wrapper { position: relative; cursor: pointer; }
-.badge { 
-    position: absolute; top: -8px; right: -8px; background: var(--apple-blue); 
-    color: white; font-size: 10px; font-weight: bold; padding: 2px 6px; 
-    border-radius: 50%; display: none; 
+/* --- PRODUCT CARDS --- */
+.brand-section { padding: 20px 5%; }
+.main-title { font-size: 26px; font-weight: 800; margin-bottom: 20px; color: #fff; display: flex; align-items: center; gap: 10px; }
+.main-title span { color: var(--gold); }
+
+.product-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+
+.card { 
+    background: var(--card-bg); border-radius: 25px; padding: 15px; backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.05); text-align: center; position: relative; overflow: hidden;
 }
+.card:hover { transform: translateY(-10px); border-color: var(--gold); box-shadow: 0 15px 30px rgba(212, 175, 55, 0.1); }
 
-/* --- MOBILE NAVIGATION --- */
+.card img { width: 100%; height: 180px; object-fit: contain; background: #fff; border-radius: 20px; padding: 10px; margin-bottom: 12px; }
+.card h3 { font-size: 16px; margin: 10px 0; font-weight: 600; }
+.price { color: var(--gold); font-weight: 800; font-size: 18px; margin-bottom: 15px; display: block; }
+
+.btn-group { display: flex; gap: 8px; }
+.btn-view { flex: 4; background: #fff; color: #000; text-decoration: none; font-size: 11px; font-weight: 800; padding: 12px; border-radius: 12px; }
+.btn-wa { flex: 1; background: #25D366; color: #fff; text-decoration: none; padding: 10px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+
+/* --- MOBILE NAV --- */
 .mobile-nav {
     position: fixed; bottom: 0; left: 0; width: 100%;
-    background: rgba(10, 10, 10, 0.98); backdrop-filter: blur(15px);
+    background: rgba(10, 10, 10, 0.95); backdrop-filter: blur(15px);
     display: none; justify-content: space-around; padding: 12px 0;
     border-top: 1px solid var(--border); z-index: 2000;
 }
-.mobile-nav .nav-item { text-decoration: none; color: #888; text-align: center; font-size: 10px; flex: 1; }
+.mobile-nav .nav-item { text-decoration: none; color: #666; text-align: center; font-size: 10px; flex: 1; }
 .mobile-nav .nav-item i { display: block; font-size: 20px; margin-bottom: 4px; }
 .mobile-nav .nav-item.active { color: var(--gold); }
-
-/* --- BRAND CHIPS --- */
-.brand-nav { display: flex; gap: 12px; overflow-x: auto; padding: 15px 5%; scrollbar-width: none; background: transparent; }
-.brand-chip { padding: 6px 20px; background: var(--glass); border: 1px solid #222; border-radius: 50px; font-size: 12px; cursor: pointer; color: #aaa; white-space: nowrap; }
-.brand-chip.active { color: #000; background: var(--gold); border-color: var(--gold); font-weight: 600; }
-
-/* --- PRODUCT GRID --- */
-.brand-section { padding: 30px 5%; }
-.brand-title { font-size: 22px; font-weight: 800; margin-bottom: 25px; display: flex; align-items: center; gap: 15px; }
-.brand-title::after { content: ''; height: 1px; flex: 1; background: var(--border); }
-.product-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 25px; }
-
-/* Edge Lighting Card Effect */
-.card { 
-    background: var(--card-bg); border-radius: 20px; padding: 15px; 
-    border: 1px solid #1a1a1a; text-align: center; position: relative; overflow: visible;
-}
-.card::before {
-    content: ""; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px;
-    background: linear-gradient(45deg, transparent, var(--gold), transparent, var(--gold));
-    background-size: 400%; z-index: -1; border-radius: 22px; opacity: 0; transition: 0.5s; filter: blur(8px);
-}
-.card:hover { transform: translateY(-8px); }
-.card:hover::before { opacity: 1; animation: rotate-lighting 3s linear infinite; }
-
-@keyframes rotate-lighting {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-.card img { width: 100%; height: 200px; object-fit: contain; background: #fff; border-radius: 15px; margin-bottom: 15px; padding: 10px; }
-.price { color: var(--gold); font-weight: 800; font-size: 20px; display: block; margin-bottom: 15px; }
-.btn-view { display: block; background: #fff; color: #000; text-decoration: none; font-size: 12px; font-weight: 800; padding: 10px; border-radius: 12px; }
 
 @media (max-width: 768px) { 
     .search-container { display: none; } 
@@ -111,54 +93,39 @@ body {
 </head>
 <body id="dynamicBody">
 
-<div id="install-banner" style="display: none; background: var(--card-bg); border: 1px solid var(--gold); padding: 15px; position: fixed; bottom: 85px; left: 5%; right: 5%; z-index: 3000; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); align-items: center; justify-content: space-between;">
-    <div style="display: flex; align-items: center; gap: 12px;">
-        <img src="https://i.ibb.co/SSNjCH9/Haider-Mobile.png" width="40" style="border-radius: 8px;">
-        <div>
-            <h4 style="margin: 0; font-size: 14px; color: var(--gold);">Install Haider Mobiles</h4>
-            <p style="margin: 0; font-size: 11px; color: #aaa;">Best Mobile Shopping Experience</p>
-        </div>
-    </div>
-    <button id="install-btn" style="background: var(--gold); color: #000; border: none; padding: 8px 15px; border-radius: 8px; font-weight: bold; font-size: 12px; cursor: pointer;">INSTALL</button>
-</div>
-
 <div class="top-header">
     <div class="header-main">
         <a href="index.html" class="store-name">HAIDER</a>
         <div class="search-container">
             <i class="fa fa-search"></i>
-            <input type="text" id="search" class="search-box" placeholder="Search devices...">
+            <input type="text" id="search" class="search-box" placeholder="Search premium devices...">
         </div>
         <div class="nav-tools">
-            <div class="nav-icons" id="auth-area">
-                <i class="fa fa-user-plus" title="Register" onclick="location.href='login.html?action=signup'"></i>
-                <i class="fa fa-user" title="Login" onclick="location.href='login.html'"></i>
-            </div>
             <div class="cart-icon-wrapper" onclick="location.href='cart.html'">
-                <i class="fa fa-shopping-bag" style="font-size: 20px;"></i>
+                <i class="fa fa-shopping-bag" style="font-size: 22px; color: var(--gold);"></i>
                 <span class="badge" id="cart-count">0</span>
             </div>
         </div>
     </div>
 </div>
 
+<div class="section-label">Mobiles & Tablets</div>
+<div class="brand-nav" id="mobile-chips"></div>
+
+<div class="section-label">Premium Accessories</div>
+<div class="brand-nav" id="accessory-chips"></div>
+
+<div id="mobile-wrapper"></div>
+<div id="accessory-wrapper"></div>
+
 <div class="mobile-nav">
     <a href="index.html" class="nav-item active"><i class="fa fa-home"></i><span>Home</span></a>
-    <a href="#" class="nav-item" onclick="document.getElementById('search').focus(); return false;"><i class="fa fa-search"></i><span>Search</span></a>
-    <a href="cart.html" class="nav-item">
-        <i class="fa fa-shopping-bag"></i>
-        <span id="mobile-cart-badge" style="color:red; font-weight:bold; display:none;">.</span>
-        <span>Cart</span>
-    </a>
-    <a href="dashboard.html" class="nav-item"><i class="fa fa-user"></i><span>Profile</span></a>
+    <a href="cart.html" class="nav-item"><i class="fa fa-shopping-bag"></i><span>Cart</span></a>
+    <a href="dashboard.html" class="nav-item"><i class="fa fa-user-gear"></i><span>Admin</span></a>
 </div>
-
-<div class="brand-nav" id="brand-chips"></div>
-<div id="brand-wrapper"></div>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
     import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
     const firebaseConfig = {
@@ -171,118 +138,65 @@ body {
     };
 
     const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
     const db = getDatabase(app);
 
-    // --- Service Worker Registration (Crucial for App) ---
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/haidermobile/sw.js')
-                .then(reg => console.log('SW Registered'))
-                .catch(err => console.log('SW Registration failed', err));
-        });
-    }
-
-    // Scroll Background Change
-    window.addEventListener('scroll', () => {
-        const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-        const body = document.getElementById('dynamicBody');
-        if (scrollPercent < 20) body.style.backgroundColor = "#000000";
-        else if (scrollPercent < 50) body.style.backgroundColor = "#0a111a";
-        else if (scrollPercent < 80) body.style.backgroundColor = "#1a0a0a";
-        else body.style.backgroundColor = "#0a1a0d";
-    });
-
-    // 1. Auth Status
-    onAuthStateChanged(auth, (user) => {
-        const authArea = document.getElementById('auth-area');
-        if (user) {
-            authArea.innerHTML = `
-                <div onclick="location.href='dashboard.html'" style="cursor:pointer; display:flex; align-items:center; gap:8px;">
-                    <i class="fa fa-circle-user" style="color:var(--gold); font-size:22px;"></i>
-                    <span style="font-size:12px; font-weight:600; color:#fff;">Account</span>
-                </div>
-            `;
-        }
-    });
-
-    // 2. Cart Logic
-    const updateCartBadge = () => {
-        const cart = JSON.parse(localStorage.getItem('haider_cart')) || [];
-        const badge = document.getElementById('cart-count');
-        if(cart.length > 0) {
-            badge.style.display = 'block';
-            badge.innerText = cart.length;
-            if(document.getElementById('mobile-cart-badge')) document.getElementById('mobile-cart-badge').style.display = 'inline';
-        }
-    };
-    updateCartBadge();
-
-    // Install App Logic
-    let deferredPrompt;
-    const installBanner = document.getElementById('install-banner');
-    const installBtn = document.getElementById('install-btn');
-
-    window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault();
-        deferredPrompt = e;
-        installBanner.style.display = 'flex';
-    });
-
-    installBtn.addEventListener('click', async () => {
-        if (deferredPrompt) {
-            deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            deferredPrompt = null;
-            installBanner.style.display = 'none';
-        }
-    });
-
-    // 3. Load Products
-    const wrapper = document.getElementById('brand-wrapper');
-    const chipContainer = document.getElementById('brand-chips');
+    const mobileWrapper = document.getElementById('mobile-wrapper');
+    const accessoryWrapper = document.getElementById('accessory-wrapper');
+    const mobileChips = document.getElementById('mobile-chips');
+    const accessoryChips = document.getElementById('accessory-chips');
 
     onValue(ref(db, 'products'), (snapshot) => {
         if (!snapshot.exists()) return;
         const data = snapshot.val();
         const allProducts = Object.keys(data).map(key => ({ id: key, ...data[key] }));
-        const brands = [...new Set(allProducts.map(p => p.brand))];
 
-        chipContainer.innerHTML = `<div class="brand-chip active" onclick="location.reload()">All</div>`;
-        wrapper.innerHTML = "";
+        // Separate Categories
+        const mobiles = allProducts.filter(p => p.category === 'Mobile' || !p.category);
+        const accessories = allProducts.filter(p => p.category === 'Accessory');
 
-        brands.forEach(brandName => {
+        renderSection(mobiles, mobileChips, mobileWrapper, "Smart<span>phones</span>");
+        renderSection(accessories, accessoryChips, accessoryWrapper, "Premium<span>Accessories</span>");
+    });
+
+    function renderSection(products, chipContainer, wrapper, title) {
+        if (products.length === 0) return;
+        
+        const brands = [...new Set(products.map(p => p.brand))];
+        chipContainer.innerHTML = `<div class="brand-chip active">All</div>`;
+        wrapper.innerHTML = `<div class="brand-section"><div class="main-title">${title}</div><div class="product-container" id="container-${title.replace(/\s/g, '')}"></div></div>`;
+        
+        const container = document.getElementById(`container-${title.replace(/\s/g, '')}`);
+
+        brands.forEach(brand => {
             const chip = document.createElement('div');
             chip.className = 'brand-chip';
-            chip.innerText = brandName;
-            chip.onclick = () => document.getElementById(`section-${brandName}`).scrollIntoView({behavior: 'smooth', block: 'center'});
+            chip.innerText = brand;
             chipContainer.appendChild(chip);
+        });
 
-            const brandProducts = allProducts.filter(p => p.brand === brandName);
-            wrapper.innerHTML += `
-                <div class="brand-section" id="section-${brandName}">
-                    <div class="brand-title" style="color:var(--gold);">${brandName.toUpperCase()}</div>
-                    <div class="product-container">
-                        ${brandProducts.map(p => `
-                            <div class="card">
-                                <img src="${p.img}" onerror="this.src='https://via.placeholder.com/200?text=Haider+Mobiles'">
-                                <h3>${p.name}</h3>
-                                <span class="price">${p.price}</span>
-                                <a href="product.html?id=${p.id}" class="btn-view">VIEW DETAILS</a>
-                            </div>
-                        `).join('')}
+        products.forEach(p => {
+            container.innerHTML += `
+                <div class="card" data-brand="${p.brand}">
+                    <img src="${p.img}" onerror="this.src='https://via.placeholder.com/200?text=Haider+Mobiles'">
+                    <h3>${p.name}</h3>
+                    <span class="price">${p.price}</span>
+                    <div class="btn-group">
+                        <a href="product.html?id=${p.id}" class="btn-view">VIEW DETAILS</a>
+                        <a href="https://wa.me/923XXXXXXXXX?text=I am interested in ${p.name}" class="btn-wa">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
                     </div>
                 </div>
             `;
         });
-    });
+    }
 
-    // Search Fix
+    // Search & Filter Logic
     document.getElementById('search').oninput = (e) => {
         const term = e.target.value.toLowerCase();
         document.querySelectorAll('.card').forEach(card => {
-            const title = card.querySelector('h3').innerText.toLowerCase();
-            card.style.display = title.includes(term) ? "block" : "none";
+            const name = card.querySelector('h3').innerText.toLowerCase();
+            card.style.display = name.includes(term) ? "block" : "none";
         });
     };
 </script>
