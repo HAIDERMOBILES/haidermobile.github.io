@@ -8,32 +8,28 @@
     <style>
         :root { --gold: #d4af37; --bg: #050505; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #fff; margin: 0; padding: 20px; }
-        
-        /* Jarvis UI Box */
         .jarvis-box {
-            border: 1px solid var(--gold); background: rgba(212, 175, 55, 0.05);
-            padding: 20px; border-radius: 15px; box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
+            max-width: 500px; margin: auto; border: 1px solid var(--gold); 
+            background: rgba(212, 175, 55, 0.05); padding: 20px; 
+            border-radius: 15px; box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
         }
-        
         .upload-area {
             border: 2px dashed #444; padding: 30px; text-align: center;
             border-radius: 15px; cursor: pointer; transition: 0.3s;
         }
         .upload-area:hover { border-color: var(--gold); background: rgba(212, 175, 55, 0.1); }
-        
         input, select { 
-            width: 100%; padding: 12px; margin-bottom: 15px; 
+            width: 100%; padding: 12px; margin-bottom: 15px; box-sizing: border-box;
             background: #111; border: 1px solid #333; color: #fff; border-radius: 8px; 
         }
-        
-        .status-dot { height: 10px; width: 100px; background: #222; border-radius: 5px; overflow: hidden; margin: 10px 0; }
+        .status-dot { height: 10px; width: 100%; background: #222; border-radius: 5px; overflow: hidden; margin: 10px 0; }
         #progress-bar { height: 100%; width: 0%; background: var(--gold); transition: 0.3s; }
     </style>
 </head>
 <body>
 
 <div class="jarvis-box">
-    <h2 style="color:var(--gold); margin-top:0;"><i class="fa fa-robot"></i> JARVIS SYSTEM V1.0</h2>
+    <h2 style="color:var(--gold); text-align:center;"><i class="fa fa-robot"></i> JARVIS SYSTEM V1.0</h2>
     
     <div class="upload-area" id="drop-zone">
         <i class="fa fa-cloud-upload" style="font-size: 40px; color: var(--gold);"></i>
@@ -52,14 +48,13 @@
             </select>
         </div>
         <input type="text" id="pPrice" placeholder="Price (Rs.)">
-        <button id="saveBtn" style="width:100%; padding:15px; background:var(--gold); border:none; border-radius:8px; font-weight:bold; cursor:pointer;">SYSTEM UPLOAD</button>
+        <button id="saveBtn" style="width:100%; padding:15px; background:var(--gold); border:none; border-radius:8px; font-weight:bold; cursor:pointer; color:black;">SYSTEM UPLOAD</button>
     </div>
 </div>
 
 <script type="module">
-    // --- FIREBASE CONFIG (Aapka wahi purana config aayega) ---
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+    import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyCYzkMGDwWZGx_PlrNfjloYZ6PVQRne9wg",
@@ -75,11 +70,11 @@
     const db = getDatabase(app);
 
     let uploadedImgUrl = "";
-    const IMGBB_API_KEY = "64c92159080b06497793b58129e92404"; // Jarvis's Key
+    // ✅ NAYI API KEY YAHAN UPDATE KAR DI HAI
+    const IMGBB_API_KEY = "6d9d7a90a22cdb8a25ed839df7365b8c"; 
 
-    // Jarvis Image Upload Logic
-    const dropZone = document.getElementById('drop-zone');
     const fileInput = document.getElementById('fileInput');
+    const dropZone = document.getElementById('drop-zone');
 
     dropZone.onclick = () => fileInput.click();
 
@@ -99,33 +94,40 @@
                 body: formData
             });
             const data = await res.json();
-            uploadedImgUrl = data.data.url;
             
-            document.getElementById('progress-bar').style.width = "100%";
-            document.getElementById('upload-text').innerText = "Image Linked Successfully!";
-            document.getElementById('upload-text').style.color = "var(--gold)";
+            if(data.success) {
+                uploadedImgUrl = data.data.url;
+                document.getElementById('progress-bar').style.width = "100%";
+                document.getElementById('upload-text').innerText = "Image Linked Successfully!";
+                document.getElementById('upload-text').style.color = "var(--gold)";
+            } else {
+                throw new Error("API Error");
+            }
         } catch (err) {
-            alert("Jarvis Error: Could not upload image.");
+            alert("Jarvis Error: Could not upload image. Check API Key.");
+            document.getElementById('upload-text').innerText = "Upload Failed!";
         }
     };
 
-    // System Upload to Firebase
     document.getElementById('saveBtn').onclick = () => {
         const product = {
             name: document.getElementById('pName').value,
             brand: document.getElementById('pBrand').value,
             price: document.getElementById('pPrice').value,
             category: document.getElementById('pCat').value,
-            img: uploadedImgUrl
+            img: uploadedImgUrl,
+            timestamp: Date.now()
         };
 
         if(uploadedImgUrl && product.name) {
             push(ref(db, 'products'), product).then(() => {
                 alert("Database Updated, Sir!");
                 location.reload();
+            }).catch(error => {
+                alert("Firebase Error: " + error.message);
             });
         } else {
-            alert("Details missing, Sir!");
+            alert("Details missing or Image not uploaded, Sir!");
         }
     };
 </script>
