@@ -150,8 +150,8 @@
         const data = snapshot.val();
         const allProducts = Object.keys(data).map(key => ({ id: key, ...data[key] }));
 
-        // Categories filter
-        const mobiles = allProducts.filter(p => p.category === 'Mobile' || !p.category);
+        // Categories filter (handle missing category as Mobile by default)
+        const mobiles = allProducts.filter(p => p.category === 'Mobile' || !p.category || p.category === '');
         const accessories = allProducts.filter(p => p.category === 'Accessory');
 
         renderSection(mobiles, mobileChips, mobileWrapper, "Smart<span>phones</span>", "mob-grid");
@@ -173,26 +173,41 @@
 
         const grid = document.getElementById(gridId);
 
-        // Brands Chips Fix: Filter out undefined/null brands
-        const brands = ["All", ...new Set(products.map(p => p.brand).filter(b => b && b !== 'undefined'))];
+        // Brands Chips Fix: Clean up undefined or empty strings
+        const brands = ["All", ...new Set(products.map(p => p.brand).filter(b => b && b !== 'undefined' && b !== ""))];
         chipContainer.innerHTML = "";
         brands.forEach(brand => {
             const chip = document.createElement('div');
             chip.className = `brand-chip ${brand === 'All' ? 'active' : ''}`;
             chip.innerText = brand;
+            
+            // Add click filtering logic
+            chip.onclick = () => {
+                const parent = chip.parentElement;
+                parent.querySelectorAll('.brand-chip').forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+                
+                const gridCards = grid.querySelectorAll('.card');
+                gridCards.forEach(card => {
+                    const b = card.getAttribute('data-brand');
+                    card.style.display = (brand === "All" || b === brand) ? "block" : "none";
+                });
+            };
             chipContainer.appendChild(chip);
         });
 
-        // Cards Rendering
+        // Cards Rendering with Safety Checks
         products.forEach(p => {
+            const safeName = p.name || "Product";
+            const safeBrand = p.brand || "Other";
             grid.innerHTML += `
-                <div class="card">
+                <div class="card" data-brand="${safeBrand}">
                     <img src="${p.img || 'https://via.placeholder.com/200'}" onerror="this.src='https://via.placeholder.com/200'">
-                    <h3>${p.name || 'Unnamed Product'}</h3>
+                    <h3>${safeName}</h3>
                     <span class="price">Rs. ${p.price || '0'}</span>
                     <div class="btn-group">
                         <a href="product.html?id=${p.id}" class="btn-view">VIEW DETAILS</a>
-                        <a href="https://wa.me/923279518790?text=Salam! I am interested in ${p.name}. What is the final price?" class="btn-wa">
+                        <a href="https://wa.me/923279518790?text=Salam! I am interested in ${safeName}." class="btn-wa">
                             <i class="fab fa-whatsapp"></i>
                         </a>
                     </div>
@@ -201,11 +216,12 @@
         });
     }
 
-    // Search function
+    // Search function with safety for undefined names
     document.getElementById('search').addEventListener('input', (e) => {
         const val = e.target.value.toLowerCase();
         document.querySelectorAll('.card').forEach(card => {
-            const title = card.querySelector('h3').innerText.toLowerCase();
+            const h3 = card.querySelector('h3');
+            const title = h3 ? h3.innerText.toLowerCase() : "";
             card.style.display = title.includes(val) ? "block" : "none";
         });
     });
