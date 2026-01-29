@@ -8,63 +8,61 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
         :root { --apple-blue: #0066cc; --gold: #d4af37; --bg: #000; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: #fff; margin: 0; padding: 20px; }
-        .admin-container { max-width: 900px; margin: 0 auto; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: #fff; margin: 0; padding: 0; }
         
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        /* Unlock Screen */
+        #login-screen {
+            position: fixed; top:0; left:0; width:100%; height:100%;
+            background:#000; z-index:9999; display:flex; align-items:center; justify-content:center;
+        }
+        .login-box { background:#111; padding:30px; border-radius:20px; border:1px solid var(--gold); text-align:center; width:90%; max-width:350px; }
+        
+        /* Main Dashboard (Hidden by default) */
+        #admin-main { display: none; padding: 20px; max-width: 900px; margin: 0 auto; }
         
         .form-card { background: #111; padding: 25px; border-radius: 20px; border: 1px solid #222; margin-bottom: 40px; }
-        .form-card h2 { color: var(--gold); margin-top: 0; font-size: 20px; }
-        
         .grid-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        input, textarea, select { width: 100%; background: #1c1c1e; border: 1px solid #333; padding: 12px; border-radius: 10px; color: #fff; margin-bottom: 15px; outline: none; font-family: inherit; }
-        input:focus, select:focus { border-color: var(--gold); }
+        input, textarea, select { width: 100%; background: #1c1c1e; border: 1px solid #333; padding: 12px; border-radius: 10px; color: #fff; margin-bottom: 15px; outline: none; }
         
-        .add-btn { background: var(--gold); color: black; border: none; padding: 15px; border-radius: 10px; font-weight: 800; cursor: pointer; width: 100%; text-transform: uppercase; }
-        
-        .product-list-item { display: flex; align-items: center; background: #111; padding: 12px; border-radius: 15px; margin-bottom: 10px; border: 1px solid #222; }
-        .product-list-item img { width: 55px; height: 55px; object-fit: contain; margin-right: 15px; background: #fff; border-radius: 8px; padding: 2px; }
-        .product-list-item div { flex: 1; }
-        .del-btn { color: #ff4444; cursor: pointer; padding: 10px; font-size: 18px; }
+        .add-btn { background: var(--gold); color: black; border: none; padding: 15px; border-radius: 10px; font-weight: 800; cursor: pointer; width: 100%; }
+        .product-list-item { display: flex; align-items: center; background: #111; padding: 10px; border-radius: 12px; margin-bottom: 10px; border: 1px solid #222; }
+        .product-list-item img { width: 50px; height: 50px; object-fit: contain; margin-right: 15px; background: #fff; border-radius: 5px; }
+        .del-btn { color: #ff4444; cursor: pointer; padding: 10px; margin-left: auto; }
     </style>
 </head>
 <body>
 
-<script>
-    const pass = prompt("Enter Admin Password:");
-    if(pass !== "haider786") {
-        alert("Wrong access!");
-        window.location.href = "index.html";
-    }
-</script>
+<div id="login-screen">
+    <div class="login-box">
+        <h2 style="color:var(--gold);">Admin Access</h2>
+        <input type="password" id="passInput" placeholder="Enter Password" style="text-align:center;">
+        <button class="add-btn" id="unlockBtn">UNLOCK DASHBOARD</button>
+    </div>
+</div>
 
-<div class="admin-container">
-    <div class="header">
-        <h2 style="color: var(--gold); font-weight: 800;">HAIDER ADMIN</h2>
-        <a href="index.html" style="color: #666; text-decoration: none; font-size: 13px;">View Shop <i class="fa fa-external-link"></i></a>
+<div id="admin-main" class="admin-container">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+        <h2 style="color:var(--gold);">Haider Inventory</h2>
+        <a href="index.html" style="color:#666; text-decoration:none;">Exit</a>
     </div>
 
     <div class="form-card">
-        <h2>Add New Product</h2>
         <div class="grid-inputs">
             <input type="text" id="pName" placeholder="Product Name">
-            <input type="text" id="pBrand" placeholder="Brand (Apple, Samsung...)">
-            <input type="text" id="pPrice" placeholder="Price (Rs 350,000)">
+            <input type="text" id="pBrand" placeholder="Brand">
+            <input type="text" id="pPrice" placeholder="Price">
             <select id="pCategory">
-                <option value="Mobile">Mobile / Tablet</option>
+                <option value="Mobile">Mobile</option>
                 <option value="Accessory">Accessory</option>
             </select>
-            <input type="text" id="pImg" placeholder="Main Photo (ImgBB Direct Link)">
-            <input type="text" id="pImg2" placeholder="Photo 2 (Optional)">
         </div>
-        <textarea id="pDesc" rows="3" placeholder="Specs / Description"></textarea>
-        <button class="add-btn" onclick="saveProduct()">Upload to Store</button>
+        <input type="text" id="pImg" placeholder="Image Link (Direct)">
+        <textarea id="pDesc" rows="3" placeholder="Specs..."></textarea>
+        <button class="add-btn" id="finalSaveBtn">UPLOAD PRODUCT</button>
     </div>
 
-    <h2 style="font-size: 18px; margin-bottom: 20px;">Current Inventory</h2>
-    <div id="adminProductList">
-        <p style="color: #444;">Loading inventory...</p>
-    </div>
+    <h2>Manage Stock</h2>
+    <div id="adminProductList"></div>
 </div>
 
 <script type="module">
@@ -84,34 +82,58 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    window.saveProduct = () => {
+    // --- Unlock Logic ---
+    const unlockBtn = document.getElementById('unlockBtn');
+    unlockBtn.addEventListener('click', () => {
+        const pass = document.getElementById('passInput').value;
+        if(pass === "haider786") {
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('admin-main').style.display = 'block';
+        } else {
+            alert("Wrong Password!");
+        }
+    });
+
+    // --- Save Product ---
+    document.getElementById('finalSaveBtn').addEventListener('click', () => {
         const name = document.getElementById('pName').value;
         const brand = document.getElementById('pBrand').value;
         const price = document.getElementById('pPrice').value;
         const category = document.getElementById('pCategory').value;
         const img = document.getElementById('pImg').value;
-        const img2 = document.getElementById('pImg2').value;
         const desc = document.getElementById('pDesc').value;
 
-        if(!name || !price || !img) { alert("Please fill Name, Price and Image!"); return; }
+        if(!name || !price || !img) { alert("Fill Name, Price & Image!"); return; }
 
-        const newProdRef = push(ref(db, 'products'));
-        set(newProdRef, {
-            name, brand, price, category, img, img2, description: desc
-        }).then(() => {
-            alert("Success!");
+        const newRef = push(ref(db, 'products'));
+        set(newRef, { name, brand, price, category, img, description: desc })
+        .then(() => {
+            alert("Product Added!");
             location.reload();
         });
-    };
+    });
 
+    // --- Load Data ---
     onValue(ref(db, 'products'), (snapshot) => {
         const list = document.getElementById('adminProductList');
         list.innerHTML = "";
-        if(!snapshot.exists()) { list.innerHTML = "No products found."; return; }
-        
         snapshot.forEach(child => {
             const p = child.val();
             list.innerHTML += `
                 <div class="product-list-item">
                     <img src="${p.img}">
                     <div>
+                        <strong>${p.name}</strong><br>
+                        <small>${p.category} | ${p.price}</small>
+                    </div>
+                    <i class="fa fa-trash-can del-btn" onclick="window.delProd('${child.key}')"></i>
+                </div>`;
+        });
+    });
+
+    window.delProd = (id) => {
+        if(confirm("Delete this?")) remove(ref(db, 'products/' + id));
+    };
+</script>
+</body>
+</html>
