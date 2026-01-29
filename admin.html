@@ -3,176 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Haider Mobiles | Admin Panel</title>
+    <title>Haider Admin | Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
-        :root { --gold: #d4af37; --bg: #000; --card: #111; }
-        body { font-family: 'Poppins', sans-serif; background: var(--bg); color: #fff; margin: 0; padding: 20px; display: none; /* Hidden until login */ }
-        .container { max-width: 800px; margin: 0 auto; }
+        :root { --gold: #d4af37; --bg: #000000; --card: #111111; }
         
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 1px solid #222; padding-bottom: 10px; }
-        .header h1 { color: var(--gold); font-size: 20px; text-transform: uppercase; letter-spacing: 1px; }
-        
-        .form-card { background: var(--card); padding: 25px; border-radius: 20px; border: 1px solid #222; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(212, 175, 55, 0.05); }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; font-size: 11px; color: #888; margin-bottom: 5px; text-transform: uppercase; }
-        input, select { width: 100%; padding: 12px; background: #000; border: 1px solid #333; color: #fff; border-radius: 10px; outline: none; font-size: 14px; }
-        input:focus { border-color: var(--gold); }
-        
-        .btn-add { width: 100%; background: var(--gold); color: #000; border: none; padding: 15px; border-radius: 12px; font-weight: 800; cursor: pointer; margin-top: 10px; transition: 0.3s; }
-        .btn-add:hover { background: #fff; transform: scale(1.02); }
-        
-        .product-list-container { background: #0a0a0a; border-radius: 20px; padding: 15px; border: 1px solid #1a1a1a; }
-        .product-item { display: flex; align-items: center; background: #111; padding: 12px; border-radius: 15px; margin-bottom: 10px; border: 1px solid #222; }
-        .product-item img { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; margin-right: 15px; background: #fff; padding: 2px; }
-        .product-info { flex: 1; }
-        .product-info h4 { margin: 0; font-size: 14px; font-weight: 600; }
-        .product-info p { margin: 0; font-size: 11px; color: var(--gold); }
-        .btn-delete { color: #ff4444; background: rgba(255, 68, 68, 0.1); border: none; cursor: pointer; font-size: 16px; width: 40px; height: 40px; border-radius: 10px; transition: 0.3s; }
-        .btn-delete:hover { background: #ff4444; color: #fff; }
-        
-        .back-btn { text-decoration: none; color: #888; font-size: 13px; font-weight: 600; }
-        .back-btn:hover { color: var(--gold); }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background: var(--bg); 
+            color: #fff; 
+            margin: 0; 
+            padding: 0;
+        }
 
-        /* Login Modal Style */
-        #login-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:#000; z-index:9999; display:flex; align-items:center; justify-content:center; }
-        .login-box { background:#111; padding:30px; border-radius:20px; border:1px solid var(--gold); text-align:center; width:90%; max-width:350px; }
+        /* Login Overlay */
+        #login-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 9999; display: flex; align-items: center; justify-content: center;
+        }
+        .login-box {
+            background: #111; padding: 40px 25px; border-radius: 25px;
+            border: 1px solid var(--gold); text-align: center; width: 90%; max-width: 350px;
+        }
+
+        /* Main Content - Hidden initially */
+        #admin-content { display: none; padding: 20px; max-width: 800px; margin: 0 auto; }
+
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .header h1 { color: var(--gold); font-size: 22px; margin: 0; }
+
+        .form-card { 
+            background: var(--card); padding: 20px; border-radius: 20px; 
+            border: 1px solid #222; margin-bottom: 30px; 
+        }
+        
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-size: 12px; color: #888; margin-bottom: 5px; }
+        
+        input, select { 
+            width: 100%; padding: 12px; background: #000; border: 1px solid #333; 
+            color: #fff; border-radius: 12px; outline: none; box-sizing: border-box;
+        }
+        
+        input:focus { border-color: var(--gold); }
+
+        .btn-add { 
+            width: 100%; background: var(--gold); color: #000; border: none; 
+            padding: 15px; border-radius: 12px; font-weight: 800; cursor: pointer; margin-top: 10px;
+        }
+
+        /* Product List Styles */
+        .product-item { 
+            display: flex; align-items: center; background: #111; padding: 12px; 
+            border-radius: 15px; margin-bottom: 10px; border: 1px solid #222; 
+        }
+        .product-item img { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; margin-right: 15px; background: #fff; }
+        .product-info { flex: 1; }
+        .product-info h4 { margin: 0; font-size: 14px; }
+        .product-info p { margin: 0; font-size: 11px; color: var(--gold); }
+        
+        .btn-delete { 
+            background: rgba(255,0,0,0.1); color: #ff4444; border: none; 
+            width: 35px; height: 35px; border-radius: 8px; cursor: pointer;
+        }
     </style>
 </head>
 <body>
 
 <div id="login-overlay">
     <div class="login-box">
-        <img src="https://i.ibb.co/SSNjCH9/Haider-Mobile.png" width="60" style="margin-bottom:15px;">
-        <h2 style="color:var(--gold); margin-top:0;">Admin Login</h2>
-        <input type="password" id="admin-pass" placeholder="Enter Admin Password" style="text-align:center; margin-bottom:20px;">
-        <button class="btn-add" id="login-btn">ENTER DASHBOARD</button>
+        <h2 style="color:var(--gold);">Admin Access</h2>
+        <input type="password" id="admin-pass" placeholder="Enter Password" style="text-align:center;">
+        <button class="btn-add" id="login-btn" style="margin-top:20px;">UNLOCK</button>
     </div>
 </div>
 
-<div class="container" id="admin-content">
+<div id="admin-content">
     <div class="header">
-        <h1><i class="fa fa-user-shield"></i> Haider Admin</h1>
-        <a href="index.html" class="back-btn"><i class="fa fa-eye"></i> View Live Store</a>
+        <h1>HAIDER ADMIN</h1>
+        <a href="index.html" style="color:#fff; text-decoration:none; font-size:12px;">EXIT</a>
     </div>
 
     <div class="form-card">
-        <h2 style="font-size: 18px; margin-top: 0; margin-bottom:20px;">Add New Inventory</h2>
         <div class="form-group">
             <label>Product Name</label>
-            <input type="text" id="p-name" placeholder="e.g. iPhone 15 Pro Max">
+            <input type="text" id="p-name">
         </div>
-        <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-            <div>
+        <div style="display: flex; gap:10px;">
+            <div class="form-group" style="flex:1;">
                 <label>Brand</label>
-                <input type="text" id="p-brand" placeholder="Apple">
+                <input type="text" id="p-brand">
             </div>
-            <div>
+            <div class="form-group" style="flex:1;">
                 <label>Category</label>
                 <select id="p-category">
-                    <option value="Mobile">Mobile / Tablet</option>
-                    <option value="Accessory">Accessory</option>
-                </select>
-            </div>
-        </div>
-        <div class="form-group">
-            <label>Price</label>
-            <input type="text" id="p-price" placeholder="Rs. 350,000">
-        </div>
-        <div class="form-group">
-            <label>ImgBB Direct Link (ending in .jpg/.png)</label>
-            <input type="text" id="p-img" placeholder="https://i.ibb.co/...">
-        </div>
-        <button class="btn-add" id="save-btn">CONFIRM & UPLOAD</button>
-    </div>
-
-    <h2 style="font-size: 16px; margin-bottom:15px; color:var(--gold);">Live Inventory</h2>
-    <div class="product-list-container" id="product-list">
-        <p style="text-align: center; color: #555;">Connecting to database...</p>
-    </div>
-</div>
-
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-
-    const firebaseConfig = {
-        apiKey: "AIzaSyCYzkMGDwWZGx_PlrNfjloYZ6PVQRne9wg",
-        authDomain: "web-app-4f3a1.firebaseapp.com",
-        projectId: "web-app-4f3a1",
-        storageBucket: "web-app-4f3a1.firebasestorage.app",
-        messagingSenderId: "222099203820",
-        appId: "1:222099203820:web:778e204d2960181dfba7c9"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-    const dbRef = ref(db, 'products');
-
-    // --- Simple Security ---
-    const PASS = "haider786"; // <--- APNA PASSWORD YAHAN SET KAREIN
-
-    document.getElementById('login-btn').onclick = () => {
-        const inputPass = document.getElementById('admin-pass').value;
-        if(inputPass === PASS) {
-            document.getElementById('login-overlay').style.display = 'none';
-            document.body.style.display = 'block';
-        } else {
-            alert("Wrong Password Bhai!");
-        }
-    };
-
-    // --- Save Product ---
-    document.getElementById('save-btn').onclick = () => {
-        const name = document.getElementById('p-name').value;
-        const brand = document.getElementById('p-brand').value;
-        const price = document.getElementById('p-price').value;
-        const category = document.getElementById('p-category').value;
-        const img = document.getElementById('p-img').value;
-
-        if(name && brand && price && img) {
-            push(dbRef, { name, brand, price, category, img })
-            .then(() => {
-                alert("Zabardast! Product add ho gaya.");
-                document.querySelectorAll('input').forEach(i => i.value = "");
-            });
-        } else {
-            alert("Saari details fill karein!");
-        }
-    };
-
-    // --- Load & Delete Products ---
-    onValue(dbRef, (snapshot) => {
-        const list = document.getElementById('product-list');
-        list.innerHTML = "";
-        if (snapshot.exists()) {
-            const data = snapshot.val();
-            Object.keys(data).forEach(key => {
-                const p = data[key];
-                list.innerHTML += `
-                    <div class="product-item">
-                        <img src="${p.img}">
-                        <div class="product-info">
-                            <h4>${p.name}</h4>
-                            <p>${p.brand} | ${p.category} | ${p.price}</p>
-                        </div>
-                        <button class="btn-delete" onclick="window.deleteProduct('${key}')">
-                            <i class="fa fa-trash"></i>
-                        </button>
-                    </div>
-                `;
-            });
-        } else {
-            list.innerHTML = "<p style='text-align:center;'>Abhi koi product nahi hai.</p>";
-        }
-    });
-
-    window.deleteProduct = (id) => {
-        if(confirm("Bhai, kya aap waqai isay delete karna chahte hain?")) {
-            remove(ref(db, 'products/' + id));
-        }
-    };
-</script>
-</body>
-</html>
