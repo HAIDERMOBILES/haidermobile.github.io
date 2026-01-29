@@ -10,20 +10,21 @@
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #fff; margin: 0; padding: 20px; }
         .jarvis-box {
             max-width: 500px; margin: auto; border: 1px solid var(--gold); 
-            background: rgba(212, 175, 55, 0.05); padding: 20px; 
+            background: rgba(212, 175, 55, 0.05); padding: 25px; 
             border-radius: 15px; box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
         }
         .upload-area {
-            border: 2px dashed #444; padding: 30px; text-align: center;
-            border-radius: 15px; cursor: pointer; transition: 0.3s;
+            border: 2px dashed #444; padding: 20px; text-align: center;
+            border-radius: 15px; cursor: pointer; transition: 0.3s; margin-bottom: 10px;
         }
         .upload-area:hover { border-color: var(--gold); background: rgba(212, 175, 55, 0.1); }
-        input, select { 
+        input, select, textarea { 
             width: 100%; padding: 12px; margin-bottom: 15px; box-sizing: border-box;
-            background: #111; border: 1px solid #333; color: #fff; border-radius: 8px; 
+            background: #111; border: 1px solid #333; color: #fff; border-radius: 8px; font-size: 14px;
         }
-        .status-dot { height: 10px; width: 100%; background: #222; border-radius: 5px; overflow: hidden; margin: 10px 0; }
-        #progress-bar { height: 100%; width: 0%; background: var(--gold); transition: 0.3s; }
+        .status-dot { height: 6px; width: 100%; background: #222; border-radius: 5px; overflow: hidden; margin: 10px 0; }
+        .progress-bar { height: 100%; width: 0%; background: var(--gold); transition: 0.3s; }
+        .preview-img { width: 50px; height: 50px; object-fit: cover; border-radius: 5px; display: none; margin-top: 10px; border: 1px solid var(--gold); }
     </style>
 </head>
 <body>
@@ -31,24 +32,41 @@
 <div class="jarvis-box">
     <h2 style="color:var(--gold); text-align:center;"><i class="fa fa-robot"></i> JARVIS SYSTEM V1.0</h2>
     
-    <div class="upload-area" id="drop-zone">
-        <i class="fa fa-cloud-upload" style="font-size: 40px; color: var(--gold);"></i>
-        <p id="upload-text">Select Product Photo</p>
-        <input type="file" id="fileInput" hidden accept="image/*">
-        <div class="status-dot"><div id="progress-bar"></div></div>
+    <div class="upload-area" onclick="document.getElementById('file1').click()">
+        <p id="t1" style="font-size: 12px;">Main Product Image</p>
+        <input type="file" id="file1" hidden accept="image/*" onchange="uploadToImgBB(this, 'img1', 't1', 'p1')">
+        <div class="status-dot"><div id="p1" class="progress-bar"></div></div>
+        <img id="prev1" class="preview-img">
     </div>
 
-    <div id="form-content" style="margin-top:20px;">
-        <input type="text" id="pName" placeholder="Product Name">
+    <div style="display: flex; gap: 10px;">
+        <div class="upload-area" style="flex:1; padding: 10px;" onclick="document.getElementById('file2').click()">
+            <p id="t2" style="font-size: 10px;">Extra Image 1</p>
+            <input type="file" id="file2" hidden accept="image/*" onchange="uploadToImgBB(this, 'img2', 't2', 'p2')">
+            <div class="status-dot"><div id="p2" class="progress-bar"></div></div>
+        </div>
+        <div class="upload-area" style="flex:1; padding: 10px;" onclick="document.getElementById('file3').click()">
+            <p id="t3" style="font-size: 10px;">Extra Image 2</p>
+            <input type="file" id="file3" hidden accept="image/*" onchange="uploadToImgBB(this, 'img3', 't3', 'p3')">
+            <div class="status-dot"><div id="p3" class="progress-bar"></div></div>
+        </div>
+    </div>
+
+    <div id="form-content" style="margin-top:10px;">
+        <input type="text" id="pName" placeholder="Product Name (e.g. iPhone 15 Pro)">
         <div style="display: flex; gap:10px;">
-            <input type="text" id="pBrand" placeholder="Brand">
+            <input type="text" id="pBrand" placeholder="Brand (Apple)">
             <select id="pCat">
                 <option value="Mobile">Mobile</option>
                 <option value="Accessory">Accessory</option>
             </select>
         </div>
-        <input type="text" id="pPrice" placeholder="Price (Rs.)">
-        <button id="saveBtn" style="width:100%; padding:15px; background:var(--gold); border:none; border-radius:8px; font-weight:bold; cursor:pointer; color:black;">SYSTEM UPLOAD</button>
+        <input type="text" id="pPrice" placeholder="Price (e.g. 245,000)">
+        <textarea id="pDesc" placeholder="Description (Optional)" rows="3"></textarea>
+        
+        <button id="saveBtn" style="width:100%; padding:15px; background:var(--gold); border:none; border-radius:8px; font-weight:bold; cursor:pointer; color:black;">
+            <i class="fa fa-database"></i> UPLOAD TO DATABASE
+        </button>
     </div>
 </div>
 
@@ -61,29 +79,25 @@
         authDomain: "web-app-4f3a1.firebaseapp.com",
         projectId: "web-app-4f3a1",
         databaseURL: "https://web-app-4f3a1-default-rtdb.firebaseio.com",
-        storageBucket: "web-app-4f3a1.firebasestorage.app",
-        messagingSenderId: "222099203820",
         appId: "1:222099203820:web:778e204d2960181dfba7c9"
     };
 
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    let uploadedImgUrl = "";
-    // ✅ NAYI API KEY YAHAN UPDATE KAR DI HAI
     const IMGBB_API_KEY = "6d9d7a90a22cdb8a25ed839df7365b8c"; 
+    let urls = { img1: "", img2: "", img3: "" };
 
-    const fileInput = document.getElementById('fileInput');
-    const dropZone = document.getElementById('drop-zone');
-
-    dropZone.onclick = () => fileInput.click();
-
-    fileInput.onchange = async (e) => {
-        const file = e.target.files[0];
+    // Global function for uploading
+    window.uploadToImgBB = async (input, key, textId, progressId) => {
+        const file = input.files[0];
         if(!file) return;
 
-        document.getElementById('upload-text').innerText = "Jarvis is uploading...";
-        document.getElementById('progress-bar').style.width = "50%";
+        const textElem = document.getElementById(textId);
+        const barElem = document.getElementById(progressId);
+        
+        textElem.innerText = "Jarvis Uploading...";
+        barElem.style.width = "40%";
 
         const formData = new FormData();
         formData.append("image", file);
@@ -96,39 +110,46 @@
             const data = await res.json();
             
             if(data.success) {
-                uploadedImgUrl = data.data.url;
-                document.getElementById('progress-bar').style.width = "100%";
-                document.getElementById('upload-text').innerText = "Image Linked Successfully!";
-                document.getElementById('upload-text').style.color = "var(--gold)";
-            } else {
-                throw new Error("API Error");
+                urls[key] = data.data.url;
+                barElem.style.width = "100%";
+                textElem.innerText = "Ready!";
+                textElem.style.color = "var(--gold)";
             }
         } catch (err) {
-            alert("Jarvis Error: Could not upload image. Check API Key.");
-            document.getElementById('upload-text').innerText = "Upload Failed!";
+            textElem.innerText = "Error!";
+            alert("Upload failed. Check internet/API.");
         }
     };
 
-    document.getElementById('saveBtn').onclick = () => {
+    document.getElementById('saveBtn').onclick = function() {
+        const btn = this;
         const product = {
-            name: document.getElementById('pName').value,
-            brand: document.getElementById('pBrand').value,
-            price: document.getElementById('pPrice').value,
+            name: document.getElementById('pName').value.trim(),
+            brand: document.getElementById('pBrand').value.trim(),
+            price: document.getElementById('pPrice').value.trim(),
             category: document.getElementById('pCat').value,
-            img: uploadedImgUrl,
+            description: document.getElementById('pDesc').value.trim(),
+            img: urls.img1,
+            img2: urls.img2,
+            img3: urls.img3,
             timestamp: Date.now()
         };
 
-        if(uploadedImgUrl && product.name) {
-            push(ref(db, 'products'), product).then(() => {
-                alert("Database Updated, Sir!");
-                location.reload();
-            }).catch(error => {
-                alert("Firebase Error: " + error.message);
-            });
-        } else {
-            alert("Details missing or Image not uploaded, Sir!");
+        if(!product.img || !product.name || !product.price) {
+            alert("Sir, Main Image, Name and Price are required!");
+            return;
         }
+
+        btn.disabled = true;
+        btn.innerText = "UPLOADING TO SYSTEM...";
+
+        push(ref(db, 'products'), product).then(() => {
+            alert("Data Secured in Database, Sir!");
+            location.reload();
+        }).catch(e => {
+            alert("Firebase Error!");
+            btn.disabled = false;
+        });
     };
 </script>
 </body>
