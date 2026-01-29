@@ -201,7 +201,29 @@ body {
         }
     };
     updateCartBadge();
+let deferredPrompt;
+const installBanner = document.getElementById('install-banner');
+const installBtn = document.getElementById('install-btn');
 
+window.addEventListener('beforeinstallprompt', (e) => {
+    // Browser ka default prompt roko
+    e.preventDefault();
+    deferredPrompt = e;
+    // Apna custom banner dikhao
+    installBanner.style.display = 'flex';
+});
+
+installBtn.addEventListener('click', async () => {
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+            console.log('User accepted the install prompt');
+        }
+        deferredPrompt = null;
+        installBanner.style.display = 'none';
+    }
+});
     // 3. Load Products (With Lighting Card HTML)
     const wrapper = document.getElementById('brand-wrapper');
     const chipContainer = document.getElementById('brand-chips');
@@ -249,6 +271,7 @@ body {
             card.style.display = title.includes(term) ? "block" : "none";
         });
     };
+    
 </script>
 </body>
 </html>
